@@ -1,4 +1,4 @@
-package route
+package app
 
 import (
 	"github.com/gookit/sux"
