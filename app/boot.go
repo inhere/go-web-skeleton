@@ -17,7 +17,7 @@ import (
 // Cfg application config
 var Cfg *ini.Ini
 
-func init() {
+func Boot() {
 	initAppEnv()
 
 	loadAppConfig()

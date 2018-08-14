@@ -18,14 +18,13 @@ import (
 )
 
 func init() {
-
+	app.Boot()
 }
 
 func main() {
 	r := sux.New()
-	env := os.Getenv("APP_ENV")
 
-	if env == app.DEV {
+	if app.IsEnv(app.DEV) {
 		sux.Debug(true)
 	}
 

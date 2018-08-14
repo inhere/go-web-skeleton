@@ -1,0 +1,13 @@
+.idea/
+.git/
+docs/
+tests/
+temp/
+swagger/
+Gopkg.lock
+*.md
+*.tmp
+*.map
+LICENSE
+.travis.yml
+go-gin-skeleton

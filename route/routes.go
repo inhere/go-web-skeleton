@@ -6,7 +6,7 @@ import (
 )
 
 // AddRoutes
-func AddRoutes(r *gin.Engine) {
+func AddRoutes(r *sux.Router) {
 	r.GET("/", api.Home)
 
 	r.LoadHTMLFiles("res/views/swagger.tpl")
@@ -17,27 +17,21 @@ func AddRoutes(r *gin.Engine) {
 	r.GET("/status", api.AppStatus)
 
 	r.GET("/ping", func(c *sux.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
+		c.Text(200, "pong")
 	})
 
-	v1 := r.Group("/v1")
-	{
-		v1.GET("/health", api.AppHealth)
+	r.Group("/v1", func() {
+		r.GET("/health", api.AppHealth)
 
 		internal := new(api.InternalApi)
-		v1.GET("/config", internal.Config)
-	}
+		r.GET("/config", internal.Config)
+	})
 
 	// static assets
-	r.Static("/static", "./static")
+	r.StaticDir("/static", "./static")
 
 	// not found routes
-	r.NoRoute(func(c *sux.Context) {
-		c.JSON(
-			404,
-			api.JsonMapData{0, "page not found", map[string]string{}},
-		)
+	r.NotFound(func(c *sux.Context) {
+		c.JSONBytes(404, []byte(`{"code": 0, "message": "page not found", data: {}}`))
 	})
 }
