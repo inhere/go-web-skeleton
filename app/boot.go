@@ -8,10 +8,10 @@ import (
 	"github.com/inhere/go-web-skeleton/app/utils"
 	"github.com/inhere/go-web-skeleton/model"
 
+	"github.com/gin-gonic/gin"
 	"github.com/inhere/go-web-skeleton/app/cache"
 	"log"
 	"strconv"
-	"github.com/gin-gonic/gin"
 )
 
 // Cfg application config

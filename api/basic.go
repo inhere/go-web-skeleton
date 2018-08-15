@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/gookit/sux"
 	"github.com/inhere/go-web-skeleton/app"
+	"github.com/inhere/go-web-skeleton/app/utils"
 	"strconv"
 )
 
@@ -45,8 +46,18 @@ func (a *BaseApi) getPageAndSize(c *sux.Context) (int, int) {
 	return app.FormatPageAndSize(page, size)
 }
 
+func (a *BaseApi) JSON(c *sux.Context, status int, data interface{}) {
+	bs, err := utils.JsonEncode(data)
+	if err != nil {
+		c.Error(err)
+		return
+	}
+
+	c.JSONBytes(status, bs)
+}
+
 // DataRes response json data
-func (a *BaseApi) DataRes(data interface{}) *JsonData {
+func (a *BaseApi) DataRes(c *sux.Context, data interface{}) *JsonData {
 	return a.MakeRes(0, nil, data)
 }
 

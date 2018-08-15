@@ -1,12 +1,11 @@
-package app
+package main
 
 import (
 	"github.com/gookit/sux"
 	"github.com/inhere/go-web-skeleton/api"
 )
 
-// AddRoutes
-func AddRoutes(r *sux.Router) {
+func addRoutes(r *sux.Router) {
 	r.GET("/", api.Home)
 
 	r.LoadHTMLFiles("res/views/swagger.tpl")

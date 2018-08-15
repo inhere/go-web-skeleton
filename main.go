@@ -10,10 +10,10 @@ import (
 	_ "github.com/inhere/go-web-skeleton/model/mysql"
 	_ "github.com/inhere/go-web-skeleton/model/rds"
 
+	"github.com/gookit/sux"
+	"github.com/gookit/sux/handlers"
 	"log"
 	"os"
-	"github.com/gookit/sux/handlers"
-	"github.com/gookit/sux"
 )
 
 func init() {
@@ -30,7 +30,7 @@ func main() {
 	// global middleware
 	r.Use(handlers.RequestLogger())
 
-	app.AddRoutes(r)
+	addRoutes(r)
 
 	log.Printf("======================== Begin Running(PID: %d) ========================", os.Getpid())
 

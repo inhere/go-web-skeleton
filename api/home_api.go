@@ -7,7 +7,7 @@ import (
 )
 
 func Home(c *sux.Context) {
-	c.JSON(200, gin.H{"hello": "welcome"})
+	c.JSON(200, sux.M{"hello": "welcome"})
 }
 
 func SwagDoc(c *sux.Context) {

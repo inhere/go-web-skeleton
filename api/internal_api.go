@@ -24,5 +24,5 @@ func (a *InternalApi) Config(c *sux.Context) {
 
 	val, _ := app.Cfg.StringMap(key)
 
-	c.JSON(200, val)
+	a.JSON(c, 200, val)
 }
