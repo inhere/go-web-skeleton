@@ -12,10 +12,12 @@ import (
 	"github.com/inhere/go-web-skeleton/app/cache"
 	"log"
 	"strconv"
+	"github.com/gookit/view"
 )
 
 // Cfg application config
 var Cfg *ini.Ini
+var View *view.Renderer
 
 func Boot() {
 	initAppEnv()

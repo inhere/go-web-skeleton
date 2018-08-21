@@ -72,4 +72,4 @@ COPY static static
 COPY res res
 
 # 一定要用 ENTRYPOINT 或者 RUN，不能使用 CMD。(CMD 会始终使用 sh -c command 来执行命令，这样PID = 1 的就不算命令所在进程了)
-ENTRYPOINT ./app-server
+ENTRYPOINT ["./app-server"]

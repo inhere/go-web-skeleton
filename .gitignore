@@ -17,10 +17,6 @@ docs/docs.go
 .idea/
 temp/
 *.xml
-*.md
-*.yml
-*.yaml
 *.js.map
-LICENSE
 LICENSE.txt
 /cliapp

@@ -14,6 +14,8 @@
 - ini配置：[gookit/ini](https://github.com/gookit/ini)
 - 日志记录：[go.uber.org/zap](https://github.com/uber-go/zap)
 - 日志记录：[sirupsen/logrus](https://github.com/sirupsen/logrus)
+  - 日志分割：[rifflock/lfshook](https://github.com/rifflock/lfshook)
+  - 日志分割：[lestrrat-go/file-rotatelogs](https://github.com/lestrrat-go/file-rotatelogs)
 - mysql等：[go-xorm/xorm](https://github.com/go-xorm/xorm)
 - mongodb: [github.com/globalsign/mgo](https://github.com/globalsign/mgo)
 - cache, redis: [garyburd/redigo](https://github.com/garyburd/redigo/redis)
@@ -24,9 +26,12 @@
 
 ### 辅助库
 
-- dep 使用dep来安装管理依赖库
-- swagger 文档生成：可以使用go-swagger 或者 [swaggo/swag](https://github.com/swaggo/swag)
-- stretchr/testify 测试辅助库，方便快速断言 [stretchr/testify](https://github.com/stretchr/testify)
+- `dep` 使用dep来安装管理依赖库
+- swagger 文档生成：
+  - go-swagger 
+  - [swaggo/swag](https://github.com/swaggo/swag)
+- 测试辅助库，方便快速断言 [stretchr/testify](https://github.com/stretchr/testify)
+- 调试工具：[davecgh/go-spew](https://github.com/davecgh/go-spew) 深度打印golang变量数据
 
 ## 额外组件
 

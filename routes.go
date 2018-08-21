@@ -6,9 +6,10 @@ import (
 )
 
 func addRoutes(r *sux.Router) {
-	r.GET("/", api.Home)
+	// static assets
+	r.StaticDir("/static", "static")
 
-	r.LoadHTMLFiles("res/views/swagger.tpl")
+	r.GET("/", api.Home)
 	r.GET("/api-docs", api.SwagDoc)
 
 	// status
@@ -25,9 +26,6 @@ func addRoutes(r *sux.Router) {
 		internal := new(api.InternalApi)
 		r.GET("/config", internal.Config)
 	})
-
-	// static assets
-	r.StaticDir("/static", "./static")
 
 	// not found routes
 	r.NotFound(func(c *sux.Context) {

@@ -24,7 +24,7 @@ func GitCommand() *cli.Command {
 		Aliases:     []string{"git-info"},
 		Description: "collect project info by git info",
 
-		Fn: gitExecute,
+		Func: gitExecute,
 	}
 
 	gitOpts = GitOpts{}

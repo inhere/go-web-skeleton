@@ -14,26 +14,34 @@ import (
 	"github.com/gookit/sux/handlers"
 	"log"
 	"os"
+	"github.com/gookit/view"
 )
+
+var router *sux.Router
 
 func init() {
 	app.Boot()
-}
 
-func main() {
-	r := sux.New()
+	// view templates
+	v := view.NewInitialized(func(r *view.Renderer) {
+		r.ViewsDir = "resource/views"
+	})
 
+	// router and routes
+	router = sux.New()
 	if app.IsEnv(app.DEV) {
 		sux.Debug(true)
 	}
 
 	// global middleware
-	r.Use(handlers.RequestLogger())
+	router.Use(handlers.RequestLogger())
 
-	addRoutes(r)
+	addRoutes(router)
+}
 
+func main() {
 	log.Printf("======================== Begin Running(PID: %d) ========================", os.Getpid())
 
 	// default is listen and serve on 0.0.0.0:8080
-	r.Listen(fmt.Sprintf("0.0.0.0:%d", app.HttpPort))
+	router.Listen(fmt.Sprintf("0.0.0.0:%d", app.HttpPort))
 }
