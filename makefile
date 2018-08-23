@@ -1,4 +1,3 @@
-# link https://github.com/humbug/box/blob/master/Makefile
 #SHELL = /bin/sh
 .DEFAULT_GOAL := help
 # 每行命令之前必须有一个tab键。如果想用其他键，可以用内置变量.RECIPEPREFIX 声明
@@ -10,7 +9,7 @@
 # - 解决办法是将两行命令写在一行，中间用分号分隔。
 # - 或者在换行符前加反斜杠转义 \
 
-##there some make command for the project
+##There some make command for the project
 ##
 
 help:
@@ -28,6 +27,7 @@ clean:
   apidoc:     ## Generate swagger UI document json
 apidoc:
 	swag init -s static
+	rm docs/docs.go
 
   pack:       ## Build and package the application
 pack:
@@ -57,25 +57,23 @@ devimg:
 	docker build -f Dockerfile --build-arg app_env=dev -t go-web-skeleton:dev .
 
 ##
-##Tests Commands:
+##Helper Commands:
 
   test:   ## Run all the tests
-test: tu
+test: fmt lt
 
   echo:   ## echo test
 echo:
 	echo hello
 
-  tu:     ## Run the unit tests
-tu:
-	go test
+  fmt:    ## Run the go fmt
+fmt:
+	go fmt ./...
 
-#
-# Rules from files
-#---------------------------------------------------------------------------
+  lt:     ## Run the golint tool
+lt:
+	go lint ./...
 
-Gopkg.lock:
-	dep ensure
-
-vendor: Gopkg.lock
-	dep init
+  tc:     ## Run the unit tests with code coverage
+tc:
+	go test -cover ./...

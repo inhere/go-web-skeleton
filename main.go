@@ -12,9 +12,9 @@ import (
 
 	"github.com/gookit/sux"
 	"github.com/gookit/sux/handlers"
+	"github.com/gookit/view"
 	"log"
 	"os"
-	"github.com/gookit/view"
 )
 
 var router *sux.Router

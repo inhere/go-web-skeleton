@@ -22,9 +22,8 @@ func SwagDoc(c *sux.Context) {
 		"UpdateTime": fInfo.ModTime().Format(app.BaseDate),
 	}
 
-	c.HTML(200, func() error {
-		return app.View.Partial(c.Resp, "swagger.tpl", data)
-	})
+	c.HTML(200, nil)
+	app.View.Partial(c.Resp, "swagger.tpl", data)
 }
 
 // @Tags InternalApi

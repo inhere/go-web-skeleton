@@ -1,12 +1,36 @@
 # go-web-skeleton
 
-使用golang gin框架的应用骨架
+golang web应用骨架
 
-## 包含应用
+主要用于：
 
 - api API接口应用
-- cli CLI命令行应用
+- cmd CLI命令行应用
 - web web应用
+
+## 项目结构
+
+```text
+api/ API接口应用 handlers
+app/ 公共目录(公共方法，应用初始化，公共组件等)
+cmd/ CLI命令行应用 commands
+ |_ bin/    命令行应用入口文件(main)
+conf/   应用配置目录（基础配置加各个环境配置）
+model/  数据和逻辑代码目录
+ |_ form/   请求表单结构数据定义，表单验证配置
+ |_ logic/  逻辑处理
+ |_ mongo/  MongoDB的数据集合模型定义
+ |_ mysql/  MySQL的数据表单模型定义
+ |_ rds/    Redis的数据模型定义
+resource/ 一些项目使用到的非代码资源（语言文件，视图模板文件等）
+static/   静态资源目录（js,css等）
+tmp/      临时文件目录(文件缓存，日志文件等)
+web/      web页面应用 handlers
+route.go  路由注册文件
+Dockerfile Dockerfile
+makefile  编写了一些通用的快捷命令，帮助打包，构建docker，生成文档，运行测试等等
+... ...
+```
 
 ## 使用的包
 
@@ -28,8 +52,8 @@
 
 - `dep` 使用dep来安装管理依赖库
 - swagger 文档生成：
-  - go-swagger 
-  - [swaggo/swag](https://github.com/swaggo/swag)
+  - go-swagger 文档复杂，功能更强大
+  - [swaggo/swag](https://github.com/swaggo/swag) 文档和使用比较简单，仅生成文档足够用了
 - 测试辅助库，方便快速断言 [stretchr/testify](https://github.com/stretchr/testify)
 - 调试工具：[davecgh/go-spew](https://github.com/davecgh/go-spew) 深度打印golang变量数据
 
@@ -46,6 +70,35 @@
 - 再搜索将所有的`go-web-skeleton`替换为你的项目名（主要是Dockerfile,makefile里）
 - 运行 `dep ensure` 安装依赖库到vendor
 - 运行项目：`go run main.go`
+
+## swagger文档生成
+
+安装：
+
+```bash
+go get -u github.com/swaggo/swag/cmd/swag
+```
+
+> 使用请查看 `swaggo/swag` 的文档和示例
+
+生成到指定目录下：
+
+```bash
+swag init -s static
+# 同时会生成这个文件，不需要可以删除掉
+rm docs/docs.go
+```
+
+注意：
+
+> `swaggo/swag` 是从字段的注释解析字段描述信息的
+
+```go
+type SomeModel struct {
+	// the name description
+	Name   string `json:"name" example:"tom"`
+}	
+```
 
 ## 使用帮助
 
