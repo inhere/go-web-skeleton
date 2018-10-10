@@ -8,7 +8,6 @@ import (
 	"github.com/inhere/go-web-skeleton/app/utils"
 	"github.com/inhere/go-web-skeleton/model"
 
-	"github.com/gin-gonic/gin"
 	"github.com/gookit/view"
 	"github.com/inhere/go-web-skeleton/app/cache"
 	"log"
@@ -55,9 +54,9 @@ func initAppEnv() {
 
 	// in dev, test
 	if IsEnv(DEV) || IsEnv(TEST) {
-		gin.SetMode(gin.DebugMode)
+		// sux.SetMode(sux.DebugMode)
 	} else {
-		gin.SetMode(gin.ReleaseMode)
+		// sux.SetMode(sux.ReleaseMode)
 	}
 }
 
