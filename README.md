@@ -32,6 +32,8 @@ makefile  编写了一些通用的快捷命令，帮助打包，构建docker，�
 ... ...
 ```
 
+> 参考 https://github.com/golang-standards/project-layout
+
 ## 使用的包
 
 - 路由器: [gookit/sux](https://github.com/gookit/sux) 

@@ -22,7 +22,7 @@ func GitCommand() *cli.Command {
 	cmd := cli.Command{
 		Name:        "git",
 		Aliases:     []string{"git-info"},
-		Description: "collect project info by git info",
+		UseFor: "collect project info by git info",
 
 		Func: gitExecute,
 	}

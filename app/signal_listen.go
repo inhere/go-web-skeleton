@@ -35,7 +35,7 @@ func handleSignals(c chan os.Signal) {
 	Logger.Sync()
 
 	// unregister from eureka
-	erkServer.Unregister()
+	// erkServer.Unregister()
 
 	// 等待一秒
 	time.Sleep(1e9 / 2)
