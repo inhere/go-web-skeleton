@@ -2,7 +2,7 @@ package cache
 
 import (
 	"fmt"
-	"github.com/garyburd/redigo/redis"
+	"github.com/gomodule/redigo/redis"
 	"github.com/inhere/go-web-skeleton/app/utils"
 	"github.com/pkg/errors"
 	"go.uber.org/zap"

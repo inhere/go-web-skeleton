@@ -3,7 +3,6 @@ module github.com/inhere/go-web-skeleton
 require (
 	github.com/BurntSushi/toml v0.3.1 // indirect
 	github.com/denisenkom/go-mssqldb v0.0.0-20180901172138-1eb28afdf9b6 // indirect
-	github.com/garyburd/redigo v2.0.0+incompatible
 	github.com/globalsign/mgo v0.0.0-20180905125535-1ca0a4f7cbcb
 	github.com/go-sql-driver/mysql v1.4.0
 	github.com/go-xorm/core v0.6.0
