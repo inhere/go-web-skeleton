@@ -22,17 +22,8 @@ var router *sux.Router
 func init() {
 	app.Boot()
 
-	// view templates
-	v := view.NewInitialized(func(r *view.Renderer) {
-		r.ViewsDir = "resource/views"
-	})
-
 	// router and routes
 	router = sux.New()
-	if app.IsEnv(app.DEV) {
-		sux.Debug(true)
-	}
-
 	// global middleware
 	router.Use(handlers.RequestLogger())
 

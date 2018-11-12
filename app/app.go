@@ -24,14 +24,14 @@ const (
 	MaxPageSize = 100
 )
 
+// application info
 var (
 	Env      = "dev"
-	Name     = "github.com/inhere/go-web-skeleton"
+	Name     = "go-web-skeleton"
 	Debug    bool
 	Hostname string
 	RootPath string
 	GitInfo  model.GitInfoData
-
 	HttpPort = 9440
 )
 

@@ -2,6 +2,7 @@ package api
 
 import (
 	"fmt"
+	"github.com/gookit/i18n"
 	"github.com/gookit/sux"
 	"github.com/inhere/go-web-skeleton/app"
 	"github.com/inhere/go-web-skeleton/app/utils"
@@ -75,7 +76,7 @@ func (a *BaseApi) MakeRes(code int, err error, data interface{}) *JsonData {
 	}
 
 	// get output message by error code e.g err-1201
-	friendlyMsg := app.Dtr(fmt.Sprintf("err-%d", code))
+	friendlyMsg := i18n.DefTr(fmt.Sprintf("err-%d", code))
 
 	// log and print error message
 	if err != nil {

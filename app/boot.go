@@ -2,7 +2,10 @@ package app
 
 import (
 	"fmt"
+	"github.com/gookit/i18n"
+	"github.com/gookit/sux"
 	"os"
+	"strings"
 
 	"github.com/gookit/ini"
 	"github.com/inhere/go-web-skeleton/app/utils"
@@ -14,11 +17,16 @@ import (
 	"strconv"
 )
 
-// Cfg application config
-var Cfg *ini.Ini
-var View *view.Renderer
+// components of the application
+var (
+	Cfg *ini.Ini
+	View *view.Renderer
+)
 
+// Boot app
 func Boot() {
+	initApp()
+
 	initAppEnv()
 
 	loadAppConfig()
@@ -41,6 +49,13 @@ func Boot() {
 	listenSignals()
 }
 
+func initApp() {
+	// view templates
+	View = view.NewInitialized(func(r *view.Renderer) {
+		r.ViewsDir = "resource/views"
+	})
+}
+
 func initAppEnv() {
 	Hostname, _ = os.Hostname()
 
@@ -54,9 +69,9 @@ func initAppEnv() {
 
 	// in dev, test
 	if IsEnv(DEV) || IsEnv(TEST) {
-		// sux.SetMode(sux.DebugMode)
+		sux.Debug(true)
 	} else {
-		// sux.SetMode(sux.ReleaseMode)
+		sux.Debug(false)
 	}
 }
 
@@ -112,4 +127,26 @@ func initCache() {
 	// 建立连接池
 	// closePool()
 	cache.Init(NewRedisPool(server, password, redisDb), prefix, Logger, Debug)
+}
+
+func initLanguage() {
+	// conf := map[string]string{
+	// 	"langDir": "res/lang",
+	// 	"allowed": "en:English|zh-CN:简体中文",
+	// 	"default": "en",
+	// }
+	conf, _ := Cfg.StringMap("lang")
+	fmt.Printf("language - %v\n", conf)
+
+	// en:English|zh-CN:简体中文
+	langList := strings.Split(conf["allowed"], "|")
+	languages := make(map[string]string, len(langList))
+
+	for _, str := range langList {
+		item := strings.Split(str, ":")
+		languages[item[0]] = item[1]
+	}
+
+	// init and load data
+	i18n.Init(conf["langDir"], conf["default"], languages)
 }
