@@ -37,7 +37,7 @@ type BaseApi struct {
 }
 
 // getPageAndSize get and format page, size params
-func (a *BaseApi) getPageAndSize(c *sux.Context) (int, int) {
+func (a *BaseApi) getPageAndSize(c *rux.Context) (int, int) {
 	pageStr := c.Query("page", "1")
 	sizeStr := c.Query("size", app.PageSizeStr)
 
@@ -47,7 +47,7 @@ func (a *BaseApi) getPageAndSize(c *sux.Context) (int, int) {
 	return app.FormatPageAndSize(page, size)
 }
 
-func (a *BaseApi) JSON(c *sux.Context, status int, data interface{}) {
+func (a *BaseApi) JSON(c *rux.Context, status int, data interface{}) {
 	bs, err := utils.JsonEncode(data)
 	if err != nil {
 		c.Error(err)
@@ -58,7 +58,7 @@ func (a *BaseApi) JSON(c *sux.Context, status int, data interface{}) {
 }
 
 // DataRes response json data
-func (a *BaseApi) DataRes(c *sux.Context, data interface{}) *JsonData {
+func (a *BaseApi) DataRes(c *rux.Context, data interface{}) *JsonData {
 	return a.MakeRes(0, nil, data)
 }
 

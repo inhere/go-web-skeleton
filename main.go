@@ -17,13 +17,13 @@ import (
 	"os"
 )
 
-var router *sux.Router
+var router *rux.Router
 
 func init() {
 	app.Boot()
 
 	// router and routes
-	router = sux.New()
+	router = rux.New()
 	// global middleware
 	router.Use(handlers.RequestLogger())
 

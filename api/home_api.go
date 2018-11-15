@@ -6,11 +6,11 @@ import (
 	"os"
 )
 
-func Home(c *sux.Context) {
-	c.JSON(200, sux.M{"hello": "welcome"})
+func Home(c *rux.Context) {
+	c.JSON(200, rux.M{"hello": "welcome"})
 }
 
-func SwagDoc(c *sux.Context) {
+func SwagDoc(c *rux.Context) {
 	fInfo, _ := os.Stat("static/swagger.json")
 
 	data := map[string]string{
@@ -32,7 +32,7 @@ func SwagDoc(c *sux.Context) {
 // @Success 201 {string} json data
 // @Failure 403 body is empty
 // @Router /health [get]
-func AppHealth(c *sux.Context) {
+func AppHealth(c *rux.Context) {
 	data := map[string]interface{}{
 		"status": "UP",
 		"info":   app.GitInfo,
@@ -41,7 +41,7 @@ func AppHealth(c *sux.Context) {
 	c.JSON(200, data)
 }
 
-func AppStatus(c *sux.Context) {
+func AppStatus(c *rux.Context) {
 	data := map[string]interface{}{
 		"status": "UP",
 		"info":   app.GitInfo,

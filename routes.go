@@ -5,7 +5,7 @@ import (
 	"github.com/inhere/go-web-skeleton/api"
 )
 
-func addRoutes(r *sux.Router) {
+func addRoutes(r *rux.Router) {
 	// static assets
 	r.StaticDir("/static", "static")
 
@@ -16,7 +16,7 @@ func addRoutes(r *sux.Router) {
 	r.GET("/health", api.AppHealth)
 	r.GET("/status", api.AppStatus)
 
-	r.GET("/ping", func(c *sux.Context) {
+	r.GET("/ping", func(c *rux.Context) {
 		c.Text(200, "pong")
 	})
 
@@ -28,7 +28,7 @@ func addRoutes(r *sux.Router) {
 	})
 
 	// not found routes
-	r.NotFound(func(c *sux.Context) {
+	r.NotFound(func(c *rux.Context) {
 		c.JSONBytes(404, []byte(`{"code": 0, "message": "page not found", data: {}}`))
 	})
 }

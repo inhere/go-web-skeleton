@@ -16,7 +16,7 @@ type InternalApi struct {
 // @Success 201 {string} json data
 // @Failure 403 body is empty
 // @router /config [get]
-func (a *InternalApi) Config(c *sux.Context) {
+func (a *InternalApi) Config(c *rux.Context) {
 	key := c.Query("key")
 	if key == "" {
 		key = app.Cfg.DefSection()

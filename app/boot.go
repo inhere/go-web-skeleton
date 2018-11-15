@@ -69,9 +69,9 @@ func initAppEnv() {
 
 	// in dev, test
 	if IsEnv(DEV) || IsEnv(TEST) {
-		sux.Debug(true)
+		rux.Debug(true)
 	} else {
-		sux.Debug(false)
+		rux.Debug(false)
 	}
 }
 
