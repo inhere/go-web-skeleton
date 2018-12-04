@@ -3,9 +3,9 @@ package api
 import (
 	"fmt"
 	"github.com/gookit/i18n"
-	"github.com/gookit/sux"
-	"github.com/inhere/go-web-skeleton/app"
-	"github.com/inhere/go-web-skeleton/app/utils"
+	"github.com/gookit/rux"
+	"github.com/inhere/go-webx/app"
+	"github.com/inhere/go-webx/app/utils"
 	"strconv"
 )
 

@@ -3,7 +3,7 @@ package rds
 import (
 	"fmt"
 	"github.com/gomodule/redigo/redis"
-	"github.com/inhere/go-web-skeleton/app"
+	"github.com/inhere/go-webx/app"
 	"go.uber.org/zap"
 	"strconv"
 )

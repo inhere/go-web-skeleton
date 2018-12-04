@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/gookit/sux"
-	"github.com/inhere/go-web-skeleton/api"
+	"github.com/gookit/rux"
+	"github.com/inhere/go-webx/controller/api"
 )
 
 func addRoutes(r *rux.Router) {

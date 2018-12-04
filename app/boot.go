@@ -3,16 +3,16 @@ package app
 import (
 	"fmt"
 	"github.com/gookit/i18n"
-	"github.com/gookit/sux"
+	"github.com/gookit/rux"
 	"os"
 	"strings"
 
 	"github.com/gookit/ini"
-	"github.com/inhere/go-web-skeleton/app/utils"
-	"github.com/inhere/go-web-skeleton/model"
+	"github.com/inhere/go-webx/app/utils"
+	"github.com/inhere/go-webx/model"
 
 	"github.com/gookit/view"
-	"github.com/inhere/go-web-skeleton/app/cache"
+	"github.com/inhere/go-webx/app/cache"
 	"log"
 	"strconv"
 )

@@ -10,4 +10,4 @@ Gopkg.lock
 *.map
 LICENSE
 .travis.yml
-go-web-skeleton
+go-webx

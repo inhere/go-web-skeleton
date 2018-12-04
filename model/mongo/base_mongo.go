@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/globalsign/mgo"
 	"github.com/globalsign/mgo/bson"
-	"github.com/inhere/go-web-skeleton/app"
+	"github.com/inhere/go-webx/app"
 	"log"
 	"reflect"
 	"strings"

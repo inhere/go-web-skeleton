@@ -1,4 +1,4 @@
-module github.com/inhere/go-web-skeleton
+module github.com/inhere/go-webx
 
 require (
 	github.com/BurntSushi/toml v0.3.1 // indirect
@@ -12,7 +12,7 @@ require (
 	github.com/gookit/color v1.1.4
 	github.com/gookit/i18n v1.0.4
 	github.com/gookit/ini v1.0.11
-	github.com/gookit/sux v1.0.2
+	github.com/gookit/rux v1.0.2
 	github.com/gookit/view v1.0.1
 	github.com/json-iterator/go v1.1.5
 	github.com/lib/pq v1.0.0 // indirect

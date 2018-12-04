@@ -1,8 +1,8 @@
 package api
 
 import (
-	"github.com/gookit/sux"
-	"github.com/inhere/go-web-skeleton/app"
+	"github.com/gookit/rux"
+	"github.com/inhere/go-webx/app"
 )
 
 // InternalApi

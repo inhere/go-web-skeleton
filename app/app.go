@@ -1,7 +1,7 @@
 package app
 
 import (
-	"github.com/inhere/go-web-skeleton/model"
+	"github.com/inhere/go-webx/model"
 	"os"
 )
 
@@ -27,7 +27,7 @@ const (
 // application info
 var (
 	Env      = "dev"
-	Name     = "go-web-skeleton"
+	Name     = "go-webx"
 	Debug    bool
 	Hostname string
 	RootPath string

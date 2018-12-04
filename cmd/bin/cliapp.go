@@ -3,7 +3,7 @@ package main
 import (
 	"github.com/gookit/cliapp"
 	"github.com/gookit/cliapp/builtin"
-	"github.com/inhere/go-web-skeleton/cmd"
+	"github.com/inhere/go-webx/cmd"
 	"runtime"
 )
 
