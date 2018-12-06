@@ -5,8 +5,8 @@ import (
 	cli "github.com/gookit/cliapp"
 	cliutil "github.com/gookit/cliapp/utils"
 	"github.com/gookit/color"
-	"github.com/inhere/go-webx/app/utils"
-	"github.com/inhere/go-webx/model"
+	"github.com/inhere/go-wex-skeleton/app/utils"
+	"github.com/inhere/go-wex-skeleton/model"
 	"log"
 	"strings"
 )
