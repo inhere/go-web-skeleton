@@ -50,7 +50,7 @@ makefile  编写了一些通用的快捷命令，帮助打包，构建docker，�
 - redis: [gomodule/redigo](https://github.com/gomodule/redigo/redis)
 - language: [gookit/i18n](https://github.com/gookit/i18n)
 - view渲染: [gookit/view](https://github.com/gookit/view)
-- 命令行应用: [gookit/cliapp](https://github.com/gookit/cliapp)
+- 命令行应用: [gookit/gcli](https://github.com/gookit/gcli)
 - 表单数据验证:
   - [gookit/validate](https://github.com/gookit/validate) 
   - [go-playground/validator](https://github.com/go-playground/validator)

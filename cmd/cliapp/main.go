@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/gookit/cliapp"
-	"github.com/gookit/cliapp/builtin"
+	"github.com/gookit/gcli"
+	"github.com/gookit/gcli/builtin"
 	"github.com/inhere/go-wex-skeleton/cmd"
 	"runtime"
 )
@@ -11,16 +11,16 @@ import (
 func main() {
 	runtime.GOMAXPROCS(runtime.NumCPU())
 
-	app := cliapp.NewApp()
+	app := gcli.NewApp()
 	app.Version = "1.0.3"
 	app.Description = "this is my cli application"
 
-	app.SetVerbose(cliapp.VerbDebug)
+	app.SetVerbose(gcli.VerbDebug)
 	// app.DefaultCmd("exampl")
 
 	app.Add(cmd.GitCommand())
 	// app.Add(cmd.ColorCommand())
-	app.Add(builtin.GenShAutoComplete())
+	app.Add(builtin.GenAutoCompleteScript())
 	// fmt.Printf("%+v\n", cliapp.CommandNames())
 	app.Run()
 }
