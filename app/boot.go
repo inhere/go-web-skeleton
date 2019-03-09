@@ -19,7 +19,7 @@ import (
 
 // components of the application
 var (
-	Cfg *ini.Ini
+	Cfg  *ini.Ini
 	View *view.Renderer
 )
 

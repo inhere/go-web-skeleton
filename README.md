@@ -15,7 +15,10 @@ api/ API接口应用 handlers
 app/ 公共目录(公共方法，应用初始化，公共组件等)
 cmd/ CLI命令行应用 commands
  |_ bin/    命令行应用入口文件(main)
-conf/   应用配置目录（基础配置加各个环境配置）
+config/   应用配置目录（基础配置加各个环境配置）
+controller
+ |_ api 
+ |_ web
 model/  数据和逻辑代码目录
  |_ form/   请求表单结构数据定义，表单验证配置
  |_ logic/  逻辑处理
@@ -23,9 +26,8 @@ model/  数据和逻辑代码目录
  |_ mysql/  MySQL的数据表单模型定义
  |_ rds/    Redis的数据模型定义
 resource/ 一些项目使用到的非代码资源（语言文件，视图模板文件等）
+runtime/      临时文件目录(文件缓存，日志文件等)
 static/   静态资源目录（js,css等）
-tmp/      临时文件目录(文件缓存，日志文件等)
-web/      web页面应用 handlers
 route.go  路由注册文件
 Dockerfile Dockerfile
 makefile  编写了一些通用的快捷命令，帮助打包，构建docker，生成文档，运行测试等等

@@ -2,9 +2,9 @@ package cmd
 
 import (
 	"fmt"
-	cli "github.com/gookit/cliapp"
-	cliutil "github.com/gookit/cliapp/utils"
 	"github.com/gookit/color"
+	cli "github.com/gookit/gcli"
+	"github.com/gookit/goutil/cliutil"
 	"github.com/inhere/go-wex-skeleton/app/utils"
 	"github.com/inhere/go-wex-skeleton/model"
 	"log"
@@ -23,7 +23,7 @@ func GitCommand() *cli.Command {
 		Name:    "git",
 		Aliases: []string{"git-info"},
 		UseFor:  "collect project info by git info",
-		Func: gitExecute,
+		Func:    gitExecute,
 	}
 
 	gitOpts = GitOpts{}

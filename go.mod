@@ -1,4 +1,4 @@
-module github.com/inhere/go-wex-skeleton
+module github.com/inhere/go-web-skeleton
 
 require (
 	github.com/BurntSushi/toml v0.3.1 // indirect
@@ -8,11 +8,11 @@ require (
 	github.com/go-xorm/core v0.6.0
 	github.com/go-xorm/xorm v0.7.0
 	github.com/gomodule/redigo v2.0.0+incompatible // indirect
-	github.com/gookit/cliapp v1.1.5
+	github.com/gookit/gcli v0.0.0-20190217161834-7f51736425a0
 	github.com/gookit/color v1.1.4
 	github.com/gookit/i18n v1.0.4
 	github.com/gookit/ini v1.0.11
-	github.com/gookit/rux v1.0.2
+	github.com/gookit/rux v1.1.2
 	github.com/gookit/view v1.0.1
 	github.com/json-iterator/go v1.1.5
 	github.com/lib/pq v1.0.0 // indirect
