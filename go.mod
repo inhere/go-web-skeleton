@@ -7,9 +7,9 @@ require (
 	github.com/go-sql-driver/mysql v1.4.0
 	github.com/go-xorm/core v0.6.0
 	github.com/go-xorm/xorm v0.7.0
-	github.com/gomodule/redigo v2.0.0+incompatible // indirect
-	github.com/gookit/gcli v0.0.0-20190217161834-7f51736425a0
-	github.com/gookit/color v1.1.4
+	github.com/gomodule/redigo v2.0.0+incompatible
+	github.com/gookit/color v1.1.5
+	github.com/gookit/goutil v0.1.2
 	github.com/gookit/i18n v1.0.4
 	github.com/gookit/ini v1.0.11
 	github.com/gookit/rux v1.1.2
@@ -24,6 +24,8 @@ require (
 	go.uber.org/atomic v1.3.2 // indirect
 	go.uber.org/multierr v1.1.0 // indirect
 	go.uber.org/zap v1.9.1
+	golang.org/x/crypto v0.0.0-20180802221118-56440b844dfe // indirect
+	google.golang.org/appengine v1.4.0 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0
 	gopkg.in/yaml.v2 v2.2.1 // indirect
 )
