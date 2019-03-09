@@ -5,7 +5,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/go-xorm/core"
 	"github.com/go-xorm/xorm"
-	"github.com/inhere/go-wex-skeleton/app"
+	"github.com/inhere/go-web-skeleton/app"
 	"log"
 	"os"
 	"strconv"

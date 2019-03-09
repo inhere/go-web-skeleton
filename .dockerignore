@@ -3,6 +3,7 @@
 docs/
 tests/
 temp/
+runtime/
 swagger/
 Gopkg.lock
 *.md
@@ -10,4 +11,4 @@ Gopkg.lock
 *.map
 LICENSE
 .travis.yml
-go-wex-skeleton
+go-web-skeleton

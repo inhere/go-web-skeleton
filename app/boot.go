@@ -8,11 +8,11 @@ import (
 	"strings"
 
 	"github.com/gookit/ini"
-	"github.com/inhere/go-wex-skeleton/app/utils"
-	"github.com/inhere/go-wex-skeleton/model"
+	"github.com/inhere/go-web-skeleton/app/utils"
+	"github.com/inhere/go-web-skeleton/model"
 
 	"github.com/gookit/view"
-	"github.com/inhere/go-wex-skeleton/app/cache"
+	"github.com/inhere/go-web-skeleton/app/cache"
 	"log"
 	"strconv"
 )

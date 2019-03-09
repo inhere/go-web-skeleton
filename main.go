@@ -3,12 +3,12 @@ package main
 import (
 	"fmt"
 	// boot and init some services(log, cache, eureka)
-	"github.com/inhere/go-wex-skeleton/app"
+	"github.com/inhere/go-web-skeleton/app"
 
 	// init redis, mongo, mysql connection
-	_ "github.com/inhere/go-wex-skeleton/model/mongo"
-	_ "github.com/inhere/go-wex-skeleton/model/mysql"
-	_ "github.com/inhere/go-wex-skeleton/model/rds"
+	_ "github.com/inhere/go-web-skeleton/model/mongo"
+	_ "github.com/inhere/go-web-skeleton/model/mysql"
+	_ "github.com/inhere/go-web-skeleton/model/rds"
 
 	"github.com/gookit/rux"
 	"github.com/gookit/rux/handlers"

@@ -2,7 +2,7 @@ package api
 
 import (
 	"github.com/gookit/rux"
-	"github.com/inhere/go-wex-skeleton/app"
+	"github.com/inhere/go-web-skeleton/app"
 )
 
 // InternalApi

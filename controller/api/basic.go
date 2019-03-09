@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"github.com/gookit/i18n"
 	"github.com/gookit/rux"
-	"github.com/inhere/go-wex-skeleton/app"
-	"github.com/inhere/go-wex-skeleton/app/utils"
+	"github.com/inhere/go-web-skeleton/app"
+	"github.com/inhere/go-web-skeleton/app/utils"
 	"strconv"
 )
 

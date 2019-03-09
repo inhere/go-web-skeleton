@@ -3,7 +3,7 @@ package cache
 import (
 	"fmt"
 	"github.com/gomodule/redigo/redis"
-	"github.com/inhere/go-wex-skeleton/app/utils"
+	"github.com/inhere/go-web-skeleton/app/utils"
 	"github.com/pkg/errors"
 	"go.uber.org/zap"
 	"time"

@@ -3,7 +3,7 @@ package main
 import (
 	"github.com/gookit/gcli"
 	"github.com/gookit/gcli/builtin"
-	"github.com/inhere/go-wex-skeleton/cmd"
+	"github.com/inhere/go-web-skeleton/cmd"
 	"runtime"
 )
 

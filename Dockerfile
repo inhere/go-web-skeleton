@@ -10,7 +10,7 @@ FROM golang:1.10-alpine as Builder
 # Recompile the standard library without CGO
 #RUN CGO_ENABLED=0 go install -a std
 
-ENV APP_DIR $GOPATH/src/go-wex-skeleton
+ENV APP_DIR $GOPATH/src/go-web-skeleton
 RUN mkdir -p $APP_DIR
 
 ADD . $APP_DIR

@@ -16,8 +16,8 @@
 docs/docs.go
 .idea/
 temp/
+runtime/
 *.xml
 *.js.map
-LICENSE.txt
 /cliapp
 /vendor

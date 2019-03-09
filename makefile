@@ -32,29 +32,29 @@ apidoc:
   pack:       ## Build and package the application
 pack:
 	# collect git info to current env config file.
-	go build -o ./go-wex-skeleton
+	go build -o ./go-web-skeleton
 
   pbprod:     ## Build prod docker image and push to your hub
 pbprod:
 	go build ./cli/cliapp.go && ./cliapp git
-	docker build -f Dockerfile -t your.dockerhub.com/go-wex-skeleton --build-arg app_env=prod .
-	docker push your.dockerhub.com/go-wex-skeleton
+	docker build -f Dockerfile -t your.dockerhub.com/go-web-skeleton --build-arg app_env=prod .
+	docker push your.dockerhub.com/go-web-skeleton
 
   pbtest:     ## Build test docker image and push to your hub
 pbtest:
 	go build ./cli/cliapp.go && ./cliapp git
-	docker build -f Dockerfile -t your.dockerhub.com/go-wex-skeleton:test --build-arg app_env=test .
-	docker push your.dockerhub.com/go-wex-skeleton:test
+	docker build -f Dockerfile -t your.dockerhub.com/go-web-skeleton:test --build-arg app_env=test .
+	docker push your.dockerhub.com/go-web-skeleton:test
 
   pbaudit:    ## Build audit docker image and push to your hub
 pbaudit:
 	go build ./cli/cliapp.go && ./cliapp git
-	docker build -f Dockerfile -t your.dockerhub.com/go-wex-skeleton:audit --build-arg app_env=audit .
-	docker push your.dockerhub.com/go-wex-skeleton:audit
+	docker build -f Dockerfile -t your.dockerhub.com/go-web-skeleton:audit --build-arg app_env=audit .
+	docker push your.dockerhub.com/go-web-skeleton:audit
 
   devimg:     ## Build dev docker image
 devimg:
-	docker build -f Dockerfile --build-arg app_env=dev -t go-wex-skeleton:dev .
+	docker build -f Dockerfile --build-arg app_env=dev -t go-web-skeleton:dev .
 
 ##
 ##Helper Commands:
