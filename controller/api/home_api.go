@@ -22,7 +22,7 @@ func SwagDoc(c *rux.Context) {
 		"UpdateTime": fInfo.ModTime().Format(app.BaseDate),
 	}
 
-	c.HTML(200, nil)
+	// c.HTML(200, nil)
 	app.View.Partial(c.Resp, "swagger.tpl", data)
 }
 
