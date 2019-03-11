@@ -6,10 +6,10 @@ const FOREVER = 0
 // 1 分钟
 const OneMinutes = 60
 
-// 2 分钟
+// TwoMinutes 2 分钟
 const TwoMinutes = 120
 
-// 3 分钟
+// ThreeMinutes 3 分钟
 const ThreeMinutes = 180
 
 // 5 分钟

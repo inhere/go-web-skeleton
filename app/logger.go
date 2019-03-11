@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
-	"gopkg.in/natefinch/lumberjack.v2"
 	"io/ioutil"
 	"os"
 	"strings"
@@ -25,7 +24,7 @@ func newGenericLogger() {
 	var err error
 	var cfg zap.Config
 
-	conf, _ := Cfg.StringMap("log")
+	conf := Cfg.StringMap("log")
 	logFile := conf["logFile"]
 	errFile := conf["errFile"]
 
@@ -72,7 +71,7 @@ func newGenericLogger() {
 func newRotatedLogger() {
 	var cfg zap.Config
 
-	conf, _ := Cfg.StringMap("log")
+	conf := Cfg.StringMap("log")
 	logFile := conf["logFile"]
 	// errFile := conf["errFile"]
 
