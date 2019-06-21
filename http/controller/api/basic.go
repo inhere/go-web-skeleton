@@ -50,7 +50,7 @@ func (a *BaseApi) getPageAndSize(c *rux.Context) (int, int) {
 func (a *BaseApi) JSON(c *rux.Context, status int, data interface{}) {
 	bs, err := utils.JsonEncode(data)
 	if err != nil {
-		c.Error(err)
+		c.AddError(err)
 		return
 	}
 
