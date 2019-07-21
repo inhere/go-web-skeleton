@@ -3,6 +3,7 @@ package mongo
 import (
 	"errors"
 	"fmt"
+	"github.com/gookit/ini/v2"
 	"github.com/globalsign/mgo"
 	"github.com/globalsign/mgo/bson"
 	"github.com/inhere/go-web-skeleton/app"
@@ -40,10 +41,10 @@ func init() {
 	}
 
 	// get config
-	auth = app.Cfg.MustString("mgo.auth")
-	mgoUri = app.Cfg.MustString("mgo.uri")
-	servers = app.Cfg.MustString("mgo.servers")
-	database = app.Cfg.MustString("mgo.database")
+	auth = ini.MustString("mgo.auth")
+	mgoUri = ini.MustString("mgo.uri")
+	servers = ini.MustString("mgo.servers")
+	database = ini.MustString("mgo.database")
 
 	// create connection
 	createConnection()

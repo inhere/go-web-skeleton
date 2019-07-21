@@ -1,6 +1,7 @@
 package api
 
 import (
+	"github.com/gookit/ini/v2"
 	"github.com/gookit/rux"
 	"github.com/inhere/go-web-skeleton/app"
 )
@@ -19,10 +20,10 @@ type InternalApi struct {
 func (a *InternalApi) Config(c *rux.Context) {
 	key := c.Query("key")
 	if key == "" {
-		key = app.Cfg.DefSection()
+		key = ini.DefSection()
 	}
 
-	val, _ := app.Cfg.StringMap(key)
+	val := ini.StringMap(key)
 
 	a.JSON(c, 200, val)
 }

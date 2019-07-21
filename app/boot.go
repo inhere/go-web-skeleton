@@ -19,7 +19,6 @@ import (
 
 // components of the application
 var (
-	Cfg  *ini.Ini
 	View *view.Renderer
 )
 
@@ -84,23 +83,23 @@ func loadAppConfig() {
 	fmt.Printf("- work dir: %s\n", WorkDir)
 	fmt.Printf("- load config: conf/app.ini, %s\n", envFile)
 
-	Cfg, err = ini.LoadFiles("conf/app.ini", envFile)
+	err = ini.LoadFiles("conf/app.ini", envFile)
 	if err != nil {
 		fmt.Printf("Fail to read file: %v", err)
 		os.Exit(1)
 	}
 
-	// Cfg.WriteTo(os.Stdout)
+	// ini.WriteTo(os.Stdout)
 
 	// setting some info
-	Name = Cfg.MustString("name")
-	Debug = Cfg.MustBool("debug")
+	Name = ini.String("name")
+	Debug = ini.Bool("debug")
 }
 
 func initAppInfo() {
 	// ensure http port
 	if HttpPort == 0 {
-		HttpPort = Cfg.MustInt("httpPort")
+		HttpPort = ini.Int("httpPort")
 	}
 
 	// git repo info
@@ -114,7 +113,7 @@ func initAppInfo() {
 
 // init redis connection pool
 func initCache() {
-	conf, _ := Cfg.StringMap("cache")
+	conf := ini.StringMap("cache")
 
 	// 从配置文件获取redis的ip以及db
 	prefix := conf["prefix"]
@@ -135,7 +134,7 @@ func initLanguage() {
 	// 	"allowed": "en:English|zh-CN:简体中文",
 	// 	"default": "en",
 	// }
-	conf, _ := Cfg.StringMap("lang")
+	conf, _ := ini.StringMap("lang")
 	fmt.Printf("language - %v\n", conf)
 
 	// en:English|zh-CN:简体中文

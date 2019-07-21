@@ -2,6 +2,7 @@ package mysql
 
 import (
 	"fmt"
+	"github.com/gookit/ini/v2"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/go-xorm/xorm"
 	"github.com/inhere/go-web-skeleton/app"
@@ -16,7 +17,7 @@ var engine *xorm.Engine
 func init() {
 	var err error
 
-	db, _ := app.Cfg.StringMap("db")
+	db, _ := ini.StringMap("db")
 	dsn := fmt.Sprintf(
 		"%s:%s@tcp(%s:%s)/%s?charset=utf8",
 		db["user"], db["password"], db["host"], db["port"], db["name"],
@@ -46,7 +47,7 @@ func init() {
 	}
 
 	// replace
-	logFile, _ := app.Cfg.Get("log.sqlLog")
+	logFile, _ := ini.Get("log.sqlLog")
 	logFile = strings.NewReplacer(
 		"{date}", app.LocTime().Format("20060102"),
 		"{hostname}", app.Hostname,

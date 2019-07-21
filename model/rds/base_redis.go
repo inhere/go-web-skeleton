@@ -2,6 +2,7 @@ package rds
 
 import (
 	"fmt"
+	"github.com/gookit/ini/v2"
 	"github.com/gomodule/redigo/redis"
 	"github.com/inhere/go-web-skeleton/app"
 	"go.uber.org/zap"
@@ -25,7 +26,7 @@ func GenRedisKey(tpl string, keys ...interface{}) string {
 // init redis connection pool
 // redigo doc https://godoc.org/github.com/gomodule/redigo/redis#pkg-examples
 func init() {
-	conf, _ := app.Cfg.StringMap("redis")
+	conf, _ := ini.StringMap("redis")
 
 	// 从配置文件获取redis的ip以及db
 	redisUrl := conf["server"]
