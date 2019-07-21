@@ -7,7 +7,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/gookit/ini"
+	"github.com/gookit/ini/v2"
 	"github.com/inhere/go-web-skeleton/app/utils"
 	"github.com/inhere/go-web-skeleton/model"
 

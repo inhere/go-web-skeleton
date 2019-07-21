@@ -3,7 +3,7 @@ package cmd
 import (
 	"fmt"
 	"github.com/gookit/color"
-	cli "github.com/gookit/gcli"
+	cli "github.com/gookit/gcli/v2"
 	"github.com/gookit/goutil/cliutil"
 	"github.com/inhere/go-web-skeleton/app/utils"
 	"github.com/inhere/go-web-skeleton/model"

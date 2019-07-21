@@ -5,7 +5,7 @@
 ################################################################################
 ###  builder image
 ################################################################################
-FROM golang:1.10-alpine as Builder
+FROM golang:1.12-alpine as Builder
 
 # Recompile the standard library without CGO
 #RUN CGO_ENABLED=0 go install -a std
@@ -26,7 +26,7 @@ RUN go version && cd $APP_DIR && go build -ldflags '-w -s' -o /tmp/app-server
 ################################################################################
 ###  target image
 ################################################################################
-FROM alpine:3.7
+FROM alpine:3.9
 LABEL maintainer="inhere <in.798@qq.com>" version="1.0"
 
 ##
@@ -47,29 +47,25 @@ ENV APP_ENV=${app_env:-"dev"} \
 ##
 RUN set -ex \
         && sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/' /etc/apk/repositories \
-        # install some tools
+# install some tools
         && apk update && apk add --no-cache tzdata ca-certificates \
-
-        # clear caches
+# clear caches
         && rm -rf /var/cache/apk/* \
-
-        # - config timezone
+# - config timezone
         && ln -sf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime \
         && echo "${TIMEZONE}" > /etc/timezone \
-
-        # - create logs, caches dir
+# - create logs, caches dir
         && mkdir -p /data/logs /var/www \
-        # && chown -R www:www /data/logs \
-
+# && chown -R www:www /data/logs \
         && echo -e "\033[42;37m Build Completed :).\033[0m\n"
 
 EXPOSE ${APP_PORT}
-WORKDIR "/var/www"
+WORKDIR /var/www
 
 COPY --from=Builder /tmp/app-server app-server
-COPY conf conf
+COPY config config
 COPY static static
-COPY res res
+COPY resource resource
 
-# 一定要用 ENTRYPOINT 或者 RUN，不能使用 CMD。(CMD 会始终使用 sh -c command 来执行命令，这样PID = 1 的就不算命令所在进程了)
-ENTRYPOINT ["./app-server"]
+# ENTRYPOINT ["./app-server"]
+CMD ["./app-server"]

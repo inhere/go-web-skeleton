@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/gookit/gcli"
-	"github.com/gookit/gcli/builtin"
+	"github.com/gookit/gcli/v2"
+	"github.com/gookit/gcli/v2/builtin"
 	"github.com/inhere/go-web-skeleton/cmd"
 	"runtime"
 )

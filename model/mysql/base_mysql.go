@@ -3,7 +3,6 @@ package mysql
 import (
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/go-xorm/core"
 	"github.com/go-xorm/xorm"
 	"github.com/inhere/go-web-skeleton/app"
 	"log"
@@ -43,7 +42,7 @@ func init() {
 
 	if app.Debug {
 		engine.ShowSQL(true)
-		engine.Logger().SetLevel(core.LOG_DEBUG)
+		engine.Logger().SetLevel(xorm.LOG_DEBUG)
 	}
 
 	// replace
