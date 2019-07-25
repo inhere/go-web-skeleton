@@ -1,11 +1,6 @@
 package app
 
 import (
-	"fmt"
-	"io/ioutil"
-	"os"
-	"strings"
-	
 	"github.com/sirupsen/logrus"
 )
 
