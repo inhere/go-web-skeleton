@@ -2,13 +2,13 @@ package app
 
 import (
 	"time"
-	
+
 	"github.com/gookit/color"
 )
 
 // Printf message
-func Printf(format string, args ...interface{})  {
-	if Debug {
+func Printf(format string, args ...interface{}) {
+	if debug {
 		color.Println("[DEBUG]")
 	}
 }
@@ -43,4 +43,13 @@ func PRCTime() time.Time {
 	loc, _ := time.LoadLocation(Timezone)
 
 	return time.Now().In(loc)
+}
+
+// AbsPath always return abs path.
+func AbsPath(path string) string {
+	if string(path[0]) == "/" {
+		return path
+	}
+
+	return path
 }

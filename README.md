@@ -12,13 +12,12 @@ golang web应用骨架
 
 ```text
 api/ API接口应用 handlers
+ |- controller
+ |_ middleware
 app/ 公共目录(公共方法，应用初始化，公共组件等)
 cmd/ CLI命令行应用 commands
- |_ bin/    命令行应用入口文件(main)
-config/   应用配置目录（基础配置加各个环境配置）
-controller
- |_ api 
- |_ web
+ |_ cliapp/    命令行应用入口文件(main)
+config/   应用配置目录(基础配置加各个环境配置)
 model/  数据和逻辑代码目录
  |_ form/   请求表单结构数据定义，表单验证配置
  |_ logic/  逻辑处理

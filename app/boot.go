@@ -8,7 +8,6 @@ import (
 	"strings"
 
 	"github.com/gookit/i18n"
-	"github.com/gookit/ini/v2"
 	"github.com/gookit/rux"
 
 	"github.com/gookit/config/v2"
@@ -24,8 +23,8 @@ var (
 	View *view.Renderer
 )
 
-// Bootstrap application
-func Bootstrap() {
+// BootWeb Bootstrap web application
+func BootWeb() {
 	initApp()
 
 	initAppEnv()
@@ -34,7 +33,7 @@ func Bootstrap() {
 
 	log.Printf(
 		"======================== Bootstrap (Env: %s, Debug: %v) ========================",
-		Env, Debug,
+		Env, debug,
 	)
 
 	initAppInfo()
@@ -94,7 +93,7 @@ func loadAppConfig() {
 
 	// setting some info
 	Name = config.String("name")
-	Debug = config.Bool("debug")
+	debug = config.Bool("debug")
 }
 
 func initAppInfo() {
@@ -130,7 +129,7 @@ func initCache() {
 
 	// 建立连接池
 	// closePool()
-	cache.Init(NewRedisPool(server, password, redisDb), prefix, Logger, Debug)
+	cache.Init(NewRedisPool(server, password, redisDb), prefix, Logger, debug)
 }
 
 func initLanguage() {

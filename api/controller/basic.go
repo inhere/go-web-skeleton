@@ -2,11 +2,12 @@ package controller
 
 import (
 	"fmt"
+	"strconv"
+
 	"github.com/gookit/i18n"
 	"github.com/gookit/rux"
 	"github.com/inhere/go-web-skeleton/app"
 	"github.com/inhere/go-web-skeleton/app/utils"
-	"strconv"
 )
 
 // JsonData is api response body structure. HttpRes

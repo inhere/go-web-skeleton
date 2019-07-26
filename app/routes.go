@@ -1,29 +1,30 @@
-package main
+package app
 
 import (
 	"github.com/gookit/rux"
-	"github.com/inhere/go-web-skeleton/app/controller/api"
+	"github.com/inhere/go-web-skeleton/api/controller"
 )
 
-func addRoutes(r *rux.Router) {
+// AddRoutes add http routes
+func AddRoutes(r *rux.Router) {
 	// static assets
 	r.StaticDir("/static", "static")
 
-	r.GET("/", api.Home)
-	r.GET("/api-docs", api.SwagDoc)
+	r.GET("/", controller.Home)
+	r.GET("/api-docs", controller.SwagDoc)
 
 	// status
-	r.GET("/health", api.AppHealth)
-	r.GET("/status", api.AppStatus)
+	r.GET("/health", controller.AppHealth)
+	r.GET("/status", controller.AppStatus)
 
 	r.GET("/ping", func(c *rux.Context) {
 		c.Text(200, "pong")
 	})
 
 	r.Group("/v1", func() {
-		r.GET("/health", api.AppHealth)
+		r.GET("/health", controller.AppHealth)
 
-		internal := new(api.InternalApi)
+		internal := new(controller.InternalApi)
 		r.GET("/config", internal.Config)
 	})
 

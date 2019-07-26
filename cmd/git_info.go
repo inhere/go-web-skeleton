@@ -2,31 +2,27 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/gookit/color"
-	cli "github.com/gookit/gcli/v2"
-	"github.com/gookit/goutil/cliutil"
-	"github.com/inhere/go-web-skeleton/app/utils"
-	"github.com/inhere/go-web-skeleton/model"
-	"log"
 	"strings"
+
+	"github.com/gookit/color"
+	"github.com/gookit/gcli/v2"
+	"github.com/gookit/goutil/cliutil"
+	"github.com/inhere/go-web-skeleton/app/helper"
+	"github.com/inhere/go-web-skeleton/model"
 )
 
-var gitOpts GitOpts
-
-type GitOpts struct {
+var gitOpts = &struct {
 	output string
-}
+}{}
 
 // GitCommand
-func GitCommand() *cli.Command {
-	cmd := cli.Command{
+func GitCommand() *gcli.Command {
+	cmd := gcli.Command{
 		Name:    "git",
 		Aliases: []string{"git-info"},
 		UseFor:  "collect project info by git info",
 		Func:    gitExecute,
 	}
-
-	gitOpts = GitOpts{}
 
 	cmd.StrOpt(&gitOpts.output, "output", "o", "static/app.json", "output file of the git info")
 
@@ -35,14 +31,13 @@ func GitCommand() *cli.Command {
 
 // arg test:
 // 	go build cliapp.go && ./cliapp git --id 12 -c val ag0 ag1
-func gitExecute(cmd *cli.Command, args []string) int {
+func gitExecute(cmd *gcli.Command, args []string) (err error) {
 	info := model.GitInfoData{}
 
 	// latest commit id by: git log --pretty=%H -n1 HEAD
-	cid, err := cliutil.ExecCommand("git log --pretty=%H -n1 HEAD")
+	cid, err := cliutil.ShellExec("git log --pretty=%H -n1 HEAD")
 	if err != nil {
-		log.Fatal(err)
-		return -2
+		return err
 	}
 
 	cid = strings.TrimSpace(cid)
@@ -50,10 +45,9 @@ func gitExecute(cmd *cli.Command, args []string) int {
 	info.Version = cid
 
 	// latest commit date by: git log -n1 --pretty=%ci HEAD
-	cDate, err := cliutil.ExecCommand("git log -n1 --pretty=%ci HEAD")
+	cDate, err := cliutil.ShellExec("git log -n1 --pretty=%ci HEAD")
 	if err != nil {
-		log.Fatal(err)
-		return -2
+		return err
 	}
 
 	cDate = strings.TrimSpace(cDate)
@@ -61,14 +55,14 @@ func gitExecute(cmd *cli.Command, args []string) int {
 	fmt.Printf("commit date: %s\n", cDate)
 
 	// get tag: git describe --tags --exact-match HEAD
-	tag, err := cliutil.ExecCommand("git describe --tags --exact-match HEAD")
+	tag, err := cliutil.ShellExec("git describe --tags --exact-match HEAD")
 	if err != nil {
 		// get branch: git branch -a | grep "*"
-		br, err := cliutil.ExecCommand(`git branch -a | grep "*"`)
+		br, err := cliutil.ShellExec(`git branch -a | grep "*"`)
 		if err != nil {
-			log.Fatal(err)
-			return -2
+			return err
 		}
+
 		br = strings.TrimSpace(strings.Trim(br, "*"))
 		info.Tag = br
 		fmt.Printf("current branch: %s\n", br)
@@ -78,13 +72,11 @@ func gitExecute(cmd *cli.Command, args []string) int {
 		fmt.Printf("latest tag: %s\n", tag)
 	}
 
-	err = utils.WriteJsonFile(gitOpts.output, &info)
-
+	err = helper.WriteJsonFile(gitOpts.output, &info)
 	if err != nil {
-		log.Fatal(err)
-		return -2
+		return
 	}
 
 	color.FgGreen.Println("\nOk, project info collect completed!")
-	return 0
+	return
 }

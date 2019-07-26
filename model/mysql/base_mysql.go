@@ -6,7 +6,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
-	
+
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/go-xorm/xorm"
 	"github.com/gookit/config/v2"
@@ -17,53 +17,53 @@ var engine *xorm.Engine
 
 func init() {
 	var err error
-	
+
 	db := config.StringMap("db")
 	if !config.Bool("db.enable") {
 		app.Printf("mysql is disabled, skip init mysql database connection")
 		return
 	}
-	
+
 	dsn := fmt.Sprintf(
 		"%s:%s@tcp(%s:%s)/%s?charset=utf8",
 		db["user"], db["password"], db["host"], db["port"], db["name"],
 	)
-	
+
 	fmt.Printf("mysql - %s\n", dsn)
-	
+
 	maxIdleConn, _ := strconv.Atoi(db["maxIdleConn"])
 	maxOpenConn, _ := strconv.Atoi(db["MaxOpenConn"])
-	
+
 	// create engine
 	engine, err = xorm.NewEngine("mysql", dsn)
-	
+
 	if err != nil {
 		log.Fatalf("Init mysql DB Failure! Error: %s\n", err.Error())
 	}
-	
+
 	engine.SetMaxIdleConns(maxIdleConn)
 	engine.SetMaxOpenConns(maxOpenConn)
-	
+
 	// core.NewCacheMapper(core.SnakeMapper{})
 	// engine.SetDefaultCacher()
-	
+
 	if app.IsDebug() {
 		engine.ShowSQL(true)
 		engine.Logger().SetLevel(xorm.DEFAULT_LOG_LEVEL)
 	}
-	
+
 	// replace
 	logFile := config.String("log.sqlLog")
 	logFile = strings.NewReplacer(
 		"{date}", app.LocTime().Format("20060102"),
 		"{hostname}", app.Hostname,
 	).Replace(logFile)
-	
+
 	f, err := os.Create(logFile)
 	if err != nil {
 		log.Fatal(err.Error())
 	}
-	
+
 	engine.SetLogger(xorm.NewSimpleLogger(f))
 }
 

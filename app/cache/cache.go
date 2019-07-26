@@ -2,11 +2,12 @@ package cache
 
 import (
 	"fmt"
+	"time"
+
 	"github.com/gomodule/redigo/redis"
 	"github.com/inhere/go-web-skeleton/app/utils"
 	"github.com/pkg/errors"
 	"go.uber.org/zap"
-	"time"
 )
 
 var debug bool

@@ -1,8 +1,9 @@
 package app
 
 import (
-	"github.com/gomodule/redigo/redis"
 	"time"
+
+	"github.com/gomodule/redigo/redis"
 )
 
 // create new redis pool

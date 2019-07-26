@@ -1,20 +1,21 @@
 package helper
 
 import (
-	"net"
-	"os"
-	"strings"
 	// "encoding/json"
 	"crypto/md5"
 	"encoding/base64"
 	"encoding/hex"
 	"fmt"
-	"github.com/json-iterator/go"
 	"io/ioutil"
 	"log"
+	"net"
+	"os"
 	"path/filepath"
 	"reflect"
+	"strings"
 	"time"
+
+	"github.com/json-iterator/go"
 )
 
 // Replaces replace multi strings

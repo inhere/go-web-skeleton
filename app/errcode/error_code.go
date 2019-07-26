@@ -19,7 +19,7 @@ const (
 	ErrNoRecord        = 2108
 	ErrOpFail          = 2112
 	ErrInvalidReq      = 2113
-	ErrParam    = 2114
+	ErrParam           = 2114
 
 	ErrReqData     = 2201
 	ErrRepeatOp    = 2202

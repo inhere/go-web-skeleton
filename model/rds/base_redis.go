@@ -20,7 +20,7 @@ func GenRedisKey(tpl string, keys ...interface{}) string {
 	if len(keys) == 0 {
 		return redisPrefix + tpl
 	}
-	
+
 	return redisPrefix + fmt.Sprintf(tpl, keys...)
 }
 
@@ -31,16 +31,16 @@ func init() {
 		app.Printf("redis is disabled, skip init redis connection")
 		return
 	}
-	
+
 	conf := config.StringMap("redis")
-	
+
 	// 从配置文件获取redis的ip以及db
 	redisUrl := conf["server"]
 	password := conf["auth"]
 	redisDb, _ := strconv.Atoi(conf["db"])
-	
+
 	fmt.Printf("redis - server=%s db=%d auth=%s\n", redisUrl, redisDb, password)
-	
+
 	// 建立连接池
 	pool = app.NewRedisPool(redisUrl, password, redisDb)
 	// closePool()
@@ -62,7 +62,7 @@ func Connection() redis.Conn {
 	if app.IsDebug() {
 		return redis.NewLoggingConn(pool.Get(), zap.NewStdLog(app.Logger), "rds")
 	}
-	
+
 	return pool.Get()
 }
 
@@ -74,7 +74,7 @@ func Connection() redis.Conn {
 func WithConnection(fn func(c redis.Conn) (interface{}, error)) (interface{}, error) {
 	conn := Connection()
 	defer conn.Close()
-	
+
 	return fn(conn)
 }
 
@@ -83,6 +83,6 @@ func HasZSet(key string) bool {
 	count, _ := redis.Int(WithConnection(func(c redis.Conn) (interface{}, error) {
 		return c.Do("zCard", key)
 	}))
-	
+
 	return count > 0
 }

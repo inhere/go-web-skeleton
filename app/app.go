@@ -1,16 +1,17 @@
 package app
 
 import (
-	"github.com/inhere/go-web-skeleton/model"
 	"os"
+
+	"github.com/inhere/go-web-skeleton/model"
 )
 
 // allowed app env name
 const (
-	PROD  = "prod"
-	PRE   = "pre"
-	TEST  = "test"
-	DEV   = "dev"
+	PROD = "prod"
+	PRE  = "pre"
+	TEST = "test"
+	DEV  = "dev"
 )
 
 // for application
@@ -26,9 +27,11 @@ const (
 
 // application info
 var (
-	Env      = "dev"
-	Name     = "go-web-skeleton"
-	Debug    bool
+	Env  = "dev"
+	Name = "go-web-skeleton"
+
+	debug bool
+
 	Hostname string
 	RootPath string
 	GitInfo  model.GitInfoData
@@ -43,16 +46,7 @@ func IsEnv(env string) bool {
 	return env == Env
 }
 
-// AbsPath always return abs path.
-func AbsPath(path string) string {
-	if string(path[0]) == "/" {
-		return path
-	}
-
-	return path
-}
-
 // IsDebug is debug mode
 func IsDebug() bool {
-	return Debug
+	return debug
 }

@@ -1,9 +1,10 @@
 package controller
 
 import (
+	"os"
+
 	"github.com/gookit/rux"
 	"github.com/inhere/go-web-skeleton/app"
-	"os"
 )
 
 func Home(c *rux.Context) {

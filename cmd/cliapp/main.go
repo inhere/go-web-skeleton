@@ -1,10 +1,11 @@
 package main
 
 import (
+	"runtime"
+
 	"github.com/gookit/gcli/v2"
 	"github.com/gookit/gcli/v2/builtin"
 	"github.com/inhere/go-web-skeleton/cmd"
-	"runtime"
 )
 
 // for test run: go build ./demo/cliapp.go && ./cliapp

@@ -3,7 +3,6 @@ package controller
 import (
 	"github.com/gookit/ini/v2"
 	"github.com/gookit/rux"
-	"github.com/inhere/go-web-skeleton/app"
 )
 
 // InternalApi
