@@ -1,4 +1,4 @@
-package api
+package controller
 
 import (
 	"fmt"
@@ -50,7 +50,7 @@ func (a *BaseApi) getPageAndSize(c *rux.Context) (int, int) {
 func (a *BaseApi) JSON(c *rux.Context, status int, data interface{}) {
 	bs, err := utils.JsonEncode(data)
 	if err != nil {
-		c.AddError(err)
+		c.Error(err)
 		return
 	}
 
@@ -83,7 +83,7 @@ func (a *BaseApi) MakeRes(code int, err error, data interface{}) *JsonData {
 		app.Logger.Warn(fmt.Sprintf("detected response error. code:%d message: %s", code, err.Error()))
 
 		// if open debug
-		if app.Debug {
+		if app.IsDebug() {
 			data = map[string]string{"debug_msg": err.Error()}
 		}
 	}

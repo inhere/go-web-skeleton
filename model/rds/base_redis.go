@@ -2,11 +2,12 @@ package rds
 
 import (
 	"fmt"
-	"github.com/gookit/ini/v2"
+	"strconv"
+
 	"github.com/gomodule/redigo/redis"
+	"github.com/gookit/config/v2"
 	"github.com/inhere/go-web-skeleton/app"
 	"go.uber.org/zap"
-	"strconv"
 )
 
 var pool *redis.Pool
@@ -14,27 +15,32 @@ var pool *redis.Pool
 // redisPrefix
 const redisPrefix = "feeds:"
 
-// GenRedisKey
+// GenRedisKey Gen redis key
 func GenRedisKey(tpl string, keys ...interface{}) string {
 	if len(keys) == 0 {
 		return redisPrefix + tpl
 	}
-
+	
 	return redisPrefix + fmt.Sprintf(tpl, keys...)
 }
 
 // init redis connection pool
 // redigo doc https://godoc.org/github.com/gomodule/redigo/redis#pkg-examples
 func init() {
-	conf, _ := ini.StringMap("redis")
-
+	if !config.Bool("redis.enable") {
+		app.Printf("redis is disabled, skip init redis connection")
+		return
+	}
+	
+	conf := config.StringMap("redis")
+	
 	// 从配置文件获取redis的ip以及db
 	redisUrl := conf["server"]
 	password := conf["auth"]
 	redisDb, _ := strconv.Atoi(conf["db"])
-
+	
 	fmt.Printf("redis - server=%s db=%d auth=%s\n", redisUrl, redisDb, password)
-
+	
 	// 建立连接池
 	pool = app.NewRedisPool(redisUrl, password, redisDb)
 	// closePool()
@@ -53,10 +59,10 @@ func Connection() redis.Conn {
 	)
 
 	// 记录操作日志
-	if app.Debug {
+	if app.IsDebug() {
 		return redis.NewLoggingConn(pool.Get(), zap.NewStdLog(app.Logger), "rds")
 	}
-
+	
 	return pool.Get()
 }
 
@@ -68,7 +74,7 @@ func Connection() redis.Conn {
 func WithConnection(fn func(c redis.Conn) (interface{}, error)) (interface{}, error) {
 	conn := Connection()
 	defer conn.Close()
-
+	
 	return fn(conn)
 }
 
@@ -77,6 +83,6 @@ func HasZSet(key string) bool {
 	count, _ := redis.Int(WithConnection(func(c redis.Conn) (interface{}, error) {
 		return c.Do("zCard", key)
 	}))
-
+	
 	return count > 0
 }

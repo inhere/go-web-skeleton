@@ -1,12 +1,12 @@
-package app
+package cache
 
-// 永远存在
-const FOREVER = 0
+// Forever
+const Forever = 0
 
-// 1 分钟
+// One minutes
 const OneMinutes = 60
 
-// TwoMinutes 2 分钟
+// Two minutes 2 分钟
 const TwoMinutes = 120
 
 // ThreeMinutes 3 分钟
@@ -21,7 +21,7 @@ const TenMinutes = 600
 // 半小时
 const HalfHour = 1800
 
-// 1 小时
+// One hour
 const OneHour = 3600
 
 // 2 小时

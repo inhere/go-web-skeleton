@@ -6,6 +6,7 @@ temp/
 runtime/
 swagger/
 Gopkg.lock
+.env
 *.md
 *.tmp
 *.map

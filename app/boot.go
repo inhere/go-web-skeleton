@@ -2,19 +2,21 @@ package app
 
 import (
 	"fmt"
-	"github.com/gookit/i18n"
-	"github.com/gookit/rux"
+	"log"
 	"os"
+	"strconv"
 	"strings"
 
+	"github.com/gookit/i18n"
 	"github.com/gookit/ini/v2"
-	"github.com/inhere/go-web-skeleton/app/utils"
+	"github.com/gookit/rux"
+
+	"github.com/gookit/config/v2"
+	"github.com/inhere/go-web-skeleton/app/helper"
 	"github.com/inhere/go-web-skeleton/model"
 
 	"github.com/gookit/view"
 	"github.com/inhere/go-web-skeleton/app/cache"
-	"log"
-	"strconv"
 )
 
 // components of the application
@@ -22,8 +24,8 @@ var (
 	View *view.Renderer
 )
 
-// Boot app
-func Boot() {
+// Bootstrap application
+func Bootstrap() {
 	initApp()
 
 	initAppEnv()
@@ -57,7 +59,6 @@ func initApp() {
 
 func initAppEnv() {
 	Hostname, _ = os.Hostname()
-
 	if env := os.Getenv("APP_ENV"); env != "" {
 		Env = env
 	}
@@ -83,7 +84,7 @@ func loadAppConfig() {
 	fmt.Printf("- work dir: %s\n", WorkDir)
 	fmt.Printf("- load config: conf/app.ini, %s\n", envFile)
 
-	err = ini.LoadFiles("conf/app.ini", envFile)
+	err = config.LoadFiles("conf/app.ini", envFile)
 	if err != nil {
 		fmt.Printf("Fail to read file: %v", err)
 		os.Exit(1)
@@ -92,28 +93,32 @@ func loadAppConfig() {
 	// ini.WriteTo(os.Stdout)
 
 	// setting some info
-	Name = ini.String("name")
-	Debug = ini.Bool("debug")
+	Name = config.String("name")
+	Debug = config.Bool("debug")
 }
 
 func initAppInfo() {
 	// ensure http port
 	if HttpPort == 0 {
-		HttpPort = ini.Int("httpPort")
+		HttpPort = config.Int("httpPort")
 	}
 
 	// git repo info
 	GitInfo = model.GitInfoData{}
 	infoFile := "static/app.json"
 
-	if utils.FileExists(infoFile) {
-		utils.ReadJsonFile(infoFile, &GitInfo)
+	if helper.FileExists(infoFile) {
+		helper.ReadJsonFile(infoFile, &GitInfo)
 	}
 }
 
 // init redis connection pool
 func initCache() {
-	conf := ini.StringMap("cache")
+	conf := config.StringMap("cache")
+	if conf["enable"] == "0" {
+		Printf("cache is disabled, skip init it")
+		return
+	}
 
 	// 从配置文件获取redis的ip以及db
 	prefix := conf["prefix"]
@@ -121,7 +126,7 @@ func initCache() {
 	password := conf["auth"]
 	redisDb, _ := strconv.Atoi(conf["db"])
 
-	fmt.Printf("cache - server=%s db=%d auth=%s\n", server, redisDb, password)
+	fmt.Printf("cache config - server=%s db=%d auth=%s\n", server, redisDb, password)
 
 	// 建立连接池
 	// closePool()
@@ -134,8 +139,8 @@ func initLanguage() {
 	// 	"allowed": "en:English|zh-CN:简体中文",
 	// 	"default": "en",
 	// }
-	conf, _ := ini.StringMap("lang")
-	fmt.Printf("language - %v\n", conf)
+	conf := config.StringMap("lang")
+	fmt.Printf("language config - %v\n", conf)
 
 	// en:English|zh-CN:简体中文
 	langList := strings.Split(conf["allowed"], "|")

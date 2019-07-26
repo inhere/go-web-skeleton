@@ -1,6 +1,17 @@
 package app
 
-import "time"
+import (
+	"time"
+	
+	"github.com/gookit/color"
+)
+
+// Printf message
+func Printf(format string, args ...interface{})  {
+	if Debug {
+		color.Println("[DEBUG]")
+	}
+}
 
 // FormatPageAndSize
 func FormatPageAndSize(page int, size int) (int, int) {

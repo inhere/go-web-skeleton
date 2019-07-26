@@ -3,13 +3,14 @@ package mongo
 import (
 	"errors"
 	"fmt"
-	"github.com/gookit/ini/v2"
-	"github.com/globalsign/mgo"
-	"github.com/globalsign/mgo/bson"
-	"github.com/inhere/go-web-skeleton/app"
 	"log"
 	"reflect"
 	"strings"
+
+	"github.com/globalsign/mgo"
+	"github.com/globalsign/mgo/bson"
+	"github.com/gookit/config/v2"
+	"github.com/inhere/go-web-skeleton/app"
 )
 
 // Collection mongodb collection interface
@@ -34,17 +35,23 @@ var (
 func init() {
 	fmt.Printf("mongo - %s db=%s\n", servers, database)
 
-	if app.Debug {
+	if app.IsDebug() {
 		// 设为 true 数据打印太多了
 		mgo.SetDebug(false)
 		// mgo.SetLogger(DebugLogger{})
 	}
 
 	// get config
-	auth = ini.MustString("mgo.auth")
-	mgoUri = ini.MustString("mgo.uri")
-	servers = ini.MustString("mgo.servers")
-	database = ini.MustString("mgo.database")
+	enable := config.Bool("mgo.enable", false)
+	if !enable {
+		app.Printf("mongo is disabled, skip init mongo connection")
+		return
+	}
+
+	auth = config.String("mgo.auth")
+	mgoUri = config.String("mgo.uri")
+	servers = config.String("mgo.servers")
+	database = config.String("mgo.database")
 
 	// create connection
 	createConnection()

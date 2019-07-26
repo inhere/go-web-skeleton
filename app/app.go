@@ -8,7 +8,7 @@ import (
 // allowed app env name
 const (
 	PROD  = "prod"
-	AUDIT = "audit"
+	PRE   = "pre"
 	TEST  = "test"
 	DEV   = "dev"
 )
@@ -50,4 +50,9 @@ func AbsPath(path string) string {
 	}
 
 	return path
+}
+
+// IsDebug is debug mode
+func IsDebug() bool {
+	return Debug
 }
