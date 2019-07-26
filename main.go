@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/inhere/go-web-skeleton/api"
 	// boot and init some services(log, cache, eureka)
 	"github.com/inhere/go-web-skeleton/app"
 
@@ -27,7 +28,7 @@ func init() {
 	// global middleware
 	router.Use(handlers.RequestLogger())
 
-	app.AddRoutes(router)
+	api.AddRoutes(router)
 }
 
 func main() {

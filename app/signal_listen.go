@@ -32,7 +32,7 @@ func handleSignals(c chan os.Signal) {
 	}
 
 	// sync logs
-	Logger.Sync()
+	// logrus.
 
 	// unregister from eureka
 	// erkServer.Unregister()

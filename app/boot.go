@@ -7,6 +7,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/gookit/config/v2/ini"
 	"github.com/gookit/i18n"
 	"github.com/gookit/rux"
 
@@ -78,12 +79,15 @@ func initAppEnv() {
 func loadAppConfig() {
 	var err error
 
-	envFile := "conf/app-" + Env + ".ini"
+	// add ini driver
+	config.AddDriver(ini.Driver)
+
+	envFile := "config/app-" + Env + ".ini"
 
 	fmt.Printf("- work dir: %s\n", WorkDir)
-	fmt.Printf("- load config: conf/app.ini, %s\n", envFile)
+	fmt.Printf("- load config: config/app.ini, %s\n", envFile)
 
-	err = config.LoadFiles("conf/app.ini", envFile)
+	err = config.LoadFiles("config/app.ini", envFile)
 	if err != nil {
 		fmt.Printf("Fail to read file: %v", err)
 		os.Exit(1)
@@ -129,7 +133,7 @@ func initCache() {
 
 	// 建立连接池
 	// closePool()
-	cache.Init(NewRedisPool(server, password, redisDb), prefix, Logger, debug)
+	cache.Init(NewRedisPool(server, password, redisDb), prefix, debug)
 }
 
 func initLanguage() {

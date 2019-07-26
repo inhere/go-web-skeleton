@@ -24,8 +24,8 @@ func NewRedisPool(url, password string, redisDb int) *redis.Pool {
 					return nil, err
 				}
 			}
-			c.Do("SELECT", redisDb)
 
+			_, err = c.Do("SELECT", redisDb)
 			return c, err
 		},
 		TestOnBorrow: func(c redis.Conn, t time.Time) error {
@@ -36,8 +36,8 @@ func NewRedisPool(url, password string, redisDb int) *redis.Pool {
 }
 
 // @see https://git-books.github.io/books/go-web-programme/?p=05.6.md
-func CloseRedisPool(pl *redis.Pool) {
-	pl.Close()
+func CloseRedisPool(pl *redis.Pool) error {
+	return pl.Close()
 }
 
 // @see https://git-books.github.io/books/go-web-programme/?p=05.6.md

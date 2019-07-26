@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"github.com/gookit/config/v2"
 	"github.com/gookit/ini/v2"
 	"github.com/gookit/rux"
 )
@@ -19,7 +20,7 @@ type InternalApi struct {
 func (a *InternalApi) Config(c *rux.Context) {
 	key := c.Query("key")
 	if key == "" {
-		key = ini.DefSection()
+		a.JSON(c, 200, config.Data())
 	}
 
 	val := ini.StringMap(key)

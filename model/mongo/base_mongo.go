@@ -11,6 +11,7 @@ import (
 	"github.com/globalsign/mgo/bson"
 	"github.com/gookit/config/v2"
 	"github.com/inhere/go-web-skeleton/app"
+	"github.com/inhere/go-web-skeleton/app/errcode"
 )
 
 // Collection mongodb collection interface
@@ -33,8 +34,6 @@ var (
 )
 
 func init() {
-	fmt.Printf("mongo - %s db=%s\n", servers, database)
-
 	if app.IsDebug() {
 		// 设为 true 数据打印太多了
 		mgo.SetDebug(false)
@@ -52,6 +51,8 @@ func init() {
 	mgoUri = config.String("mgo.uri")
 	servers = config.String("mgo.servers")
 	database = config.String("mgo.database")
+
+	fmt.Printf("mongo config - %s db=%s\n", servers, database)
 
 	// create connection
 	createConnection()
@@ -113,7 +114,7 @@ func WithCollection(collection string, s func(*mgo.Collection) error) error {
 // mongo.FindById("collection name", "id", m)
 func FindById(cName string, id string, model interface{}, fields string) (code int, err error) {
 	if len(id) < 10 || !bson.IsObjectIdHex(id) {
-		return app.ErrInvalidParam, invalidObjectId
+		return errcode.ErrParam, invalidObjectId
 	}
 
 	// "col1,col2" => bson.M{"col1": 1,"col1": 2}
@@ -128,9 +129,9 @@ func FindById(cName string, id string, model interface{}, fields string) (code i
 
 	if err != nil {
 		if err == mgo.ErrNotFound {
-			code = app.ErrNotFound
+			code = errcode.ErrNotFound
 		} else {
-			code = app.ErrDatabase
+			code = errcode.ErrDatabase
 		}
 	}
 
@@ -149,9 +150,9 @@ func FindOne(cName string, query bson.M, model interface{}, fields string) (code
 
 	if err != nil {
 		if err == mgo.ErrNotFound {
-			code = app.ErrNotFound
+			code = errcode.ErrNotFound
 		} else {
-			code = app.ErrDatabase
+			code = errcode.ErrDatabase
 		}
 	}
 
@@ -184,7 +185,7 @@ func FindAllByPage(cName string, query bson.M, sort string, fields string, page 
 // UpdateById
 func UpdateById(cName string, id string, change bson.M) (code int, err error) {
 	if !bson.IsObjectIdHex(id) {
-		return app.ErrInvalidParam, invalidObjectId
+		return errcode.ErrParam, invalidObjectId
 	}
 
 	conn := Connection()
@@ -200,9 +201,9 @@ func UpdateById(cName string, id string, change bson.M) (code int, err error) {
 
 	if err != nil {
 		if err == mgo.ErrNotFound {
-			code = app.ErrNotFound
+			code = errcode.ErrNotFound
 		} else {
-			code = app.ErrUpdateFail
+			code = errcode.ErrUpdateFail
 		}
 	}
 
@@ -224,10 +225,10 @@ func UpdateBy(cName string, query bson.M, change bson.M) (code int, err error) {
 
 	if err != nil {
 		if err == mgo.ErrNotFound {
-			return app.ErrNotFound, err
+			return errcode.ErrNotFound, err
 		}
 
-		return app.ErrUpdateFail, err
+		return errcode.ErrUpdateFail, err
 	}
 
 	return
@@ -236,7 +237,7 @@ func UpdateBy(cName string, query bson.M, change bson.M) (code int, err error) {
 // DeleteById Delete a record by primary key ID
 func DeleteById(cName string, id string) (code int, err error) {
 	if !bson.IsObjectIdHex(id) {
-		return app.ErrInvalidParam, invalidObjectId
+		return errcode.ErrParam, invalidObjectId
 	}
 
 	// do delete
@@ -246,9 +247,9 @@ func DeleteById(cName string, id string) (code int, err error) {
 
 	if err != nil {
 		if err == mgo.ErrNotFound {
-			code = app.ErrNotFound
+			code = errcode.ErrNotFound
 		} else {
-			code = app.ErrDeleteFail
+			code = errcode.ErrDeleteFail
 		}
 	}
 
@@ -264,7 +265,6 @@ func TransMap2BsonM(mp map[string]interface{}) bson.M {
 // TransMapToBsonM
 func TransList2BsonM(ls []string) (bm bson.M) {
 	bm = bson.M{}
-
 	for _, v := range ls {
 		bm[v] = 1
 	}

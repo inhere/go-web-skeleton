@@ -1,12 +1,16 @@
-# go-web-skeleton
+# Go Web Skeleton
 
-golang web应用骨架
+一个完整的 Golang web 应用骨架。
 
-主要用于：
+包含：
 
-- api API接口应用
-- cmd CLI命令行应用
-- web web应用
+- 可用于API接口应用，CLI命令行应用，WEB应用
+- 日志库logrus配置使用
+- swagger API文档配置生成
+- 多语言支持，视图渲染，请求数据验证
+- 配置读取管理，根据环境加载，多文件支持
+- 包含 redis, mysql, mongo 的初始化和简单使用
+- 使用`go mod`来安装管理依赖库
 
 ## 项目结构
 
@@ -41,10 +45,11 @@ makefile  编写了一些通用的快捷命令，帮助打包，构建docker，�
 - 配置读取管理：
   - ini配置：[gookit/ini](https://github.com/gookit/ini)
   - 多种格式配置：[gookit/config](https://github.com/gookit/config)
-- 日志记录：[sirupsen/logrus](https://github.com/sirupsen/logrus)
-  - 日志分割：[rifflock/lfshook](https://github.com/rifflock/lfshook)
-  - 日志分割：[lestrrat-go/file-rotatelogs](https://github.com/lestrrat-go/file-rotatelogs)
-- 日志记录：[go.uber.org/zap](https://github.com/uber-go/zap)
+- 日志记录：
+  - [sirupsen/logrus](https://github.com/sirupsen/logrus)
+    - 日志分割：[rifflock/lfshook](https://github.com/rifflock/lfshook)
+    - 日志分割：[lestrrat-go/file-rotatelogs](https://github.com/lestrrat-go/file-rotatelogs)
+  - 日志记录：[go.uber.org/zap](https://github.com/uber-go/zap)
 - mysql等：[go-xorm/xorm](https://github.com/go-xorm/xorm)
 - mongodb: [github.com/globalsign/mgo](https://github.com/globalsign/mgo)
 - cache: [gookit/cache](https://github.com/gookit/cache) 
@@ -62,7 +67,6 @@ makefile  编写了一些通用的快捷命令，帮助打包，构建docker，�
 
 ### 辅助库
 
-- `dep` 使用dep来安装管理依赖库
 - swagger 文档生成：
   - go-swagger 文档复杂，功能更强大
   - [swaggo/swag](https://github.com/swaggo/swag) 文档和使用比较简单，仅生成文档足够用了
@@ -135,6 +139,10 @@ go fmt ./...
 ```bash
 golint ./...
 ```
+
+## 参考
+
+- [golang-standards/project-layout](https://github.com/golang-standards/project-layout)
 
 ## License
 

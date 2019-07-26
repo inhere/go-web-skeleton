@@ -137,30 +137,6 @@ func FormatDate(str string) string {
 	return tt.Format("2006-01-02 15:04:05")
 }
 
-// TransDateToTime
-func TransDateToTime(date string) (t time.Time, ok bool) {
-	var layout string
-
-	switch len(date) {
-	case 10: // 2006-01-02
-		layout = "2006-01-02"
-	case 19: // 2006-01-02 12:24:36
-		layout = "2006-01-02 15:04:05"
-	default:
-		return
-	}
-
-	t, err := time.ParseInLocation(layout, date, time.Local)
-	ok = err == nil
-
-	return
-}
-
-// CalcElapsedTime 计算运行时间消耗 单位 ms(毫秒)
-func CalcElapsedTime(startTime time.Time) string {
-	return fmt.Sprintf("%.3f", time.Since(startTime).Seconds()*1000)
-}
-
 // GetRootPath Get abs path of the project
 func GetRootPath() string {
 	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
@@ -169,18 +145,6 @@ func GetRootPath() string {
 	}
 
 	return strings.Replace(dir, "\\", "/", -1)
-}
-
-// Substr
-func Substr(s string, pos, length int) string {
-	runes := []rune(s)
-	l := pos + length
-
-	if l > len(runes) {
-		l = len(runes)
-	}
-
-	return string(runes[pos:l])
 }
 
 // TransStruct2Map translate structure to map

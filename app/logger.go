@@ -11,7 +11,7 @@ const RFC3339NanoFixed = "2006-01-02T15:04:05.000000000Z07:00"
 func initLogger() {
 	// newGenericLogger()
 	logrus.SetFormatter(&logrus.TextFormatter{
-		TimestampFormat: RFC3339NanoFixed,
+		TimestampFormat: RFC3339Normal,
 		DisableColors:   false,
 		FullTimestamp:   true,
 	})

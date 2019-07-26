@@ -4,10 +4,11 @@ import (
 	"fmt"
 	"strconv"
 
+	"github.com/gookit/goutil/jsonutil"
 	"github.com/gookit/i18n"
 	"github.com/gookit/rux"
 	"github.com/inhere/go-web-skeleton/app"
-	"github.com/inhere/go-web-skeleton/app/utils"
+	"github.com/sirupsen/logrus"
 )
 
 // JsonData is api response body structure. HttpRes
@@ -49,7 +50,7 @@ func (a *BaseApi) getPageAndSize(c *rux.Context) (int, int) {
 }
 
 func (a *BaseApi) JSON(c *rux.Context, status int, data interface{}) {
-	bs, err := utils.JsonEncode(data)
+	bs, err := jsonutil.Encode(data)
 	if err != nil {
 		c.Error(err)
 		return
@@ -81,7 +82,7 @@ func (a *BaseApi) MakeRes(code int, err error, data interface{}) *JsonData {
 
 	// log and print error message
 	if err != nil {
-		app.Logger.Warn(fmt.Sprintf("detected response error. code:%d message: %s", code, err.Error()))
+		logrus.Warn("detected response error", "code", code, "message", err.Error())
 
 		// if open debug
 		if app.IsDebug() {

@@ -2,12 +2,13 @@ package rds
 
 import (
 	"fmt"
+	"log"
 	"strconv"
 
 	"github.com/gomodule/redigo/redis"
 	"github.com/gookit/config/v2"
 	"github.com/inhere/go-web-skeleton/app"
-	"go.uber.org/zap"
+	"github.com/sirupsen/logrus"
 )
 
 var pool *redis.Pool
@@ -52,15 +53,16 @@ func init() {
 //   defer conn.Close()
 //   ... do something ...
 func Connection() redis.Conn {
-	app.Logger.Info("get new redis connection from pool",
-		zap.Namespace("context"),
-		zap.Int("IdleCount", pool.IdleCount()),
-		zap.Int("ActiveCount", pool.ActiveCount()),
+	logrus.Info("get new redis connection from pool",
+		// zap.Namespace("context"),
+		// zap.Int("IdleCount", pool.IdleCount()),
+		// zap.Int("ActiveCount", pool.ActiveCount()),
 	)
 
 	// 记录操作日志
 	if app.IsDebug() {
-		return redis.NewLoggingConn(pool.Get(), zap.NewStdLog(app.Logger), "rds")
+		w := logrus.StandardLogger().Writer()
+		return redis.NewLoggingConn(pool.Get(), log.New(w, "", 0), "rds")
 	}
 
 	return pool.Get()
