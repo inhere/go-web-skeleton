@@ -59,14 +59,14 @@ Makefile    Has written some common shortcut commands to help package, build doc
 - Mongodb: [github.com/globalsign/mgo](https://github.com/globalsign/mgo)
 - Cache: [gookit/cache](https://github.com/gookit/cache)
 - Redis
-  - [go-redis/redis](https://github.com/go-redis/redis)
-  - [gomodule/redigo](https://github.com/gomodule/redigo/redis)
+  - [go-redis/redis](https://github.com/go-redis/redis)
+  - [gomodule/redigo](https://github.com/gomodule/redigo/redis)
 - I18n language: [gookit/i18n](https://github.com/gookit/i18n)
 - View rendering: [gookit/view](https://github.com/gookit/view)
 - Command line application: [gookit/gcli](https://github.com/gookit/gcli)
 - Form data verification:
-  - [gookit/validate](https://github.com/gookit/validate)
-  - [go-playground/validator](https://github.com/go-playground/validator)
+  - [gookit/validate](https://github.com/gookit/validate)
+  - [go-playground/validator](https://github.com/go-playground/validator)
 - High-performance json serialization library: [json-iterator/go](https://github.com/json-iterator/go)
 - ~eureka client: [PDOK/go-eureka-client](https://github.com/PDOK/go-eureka-client)~ Not used
 
