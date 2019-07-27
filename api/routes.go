@@ -11,7 +11,7 @@ func AddRoutes(r *rux.Router) {
 	r.StaticDir("/static", "static")
 
 	r.GET("/", controller.Home)
-	r.GET("/api-docs", controller.SwagDoc)
+	r.GET("/apidoc", controller.SwagDoc)
 
 	// status
 	r.GET("/health", controller.AppHealth)

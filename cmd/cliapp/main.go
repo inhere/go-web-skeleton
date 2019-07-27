@@ -8,7 +8,7 @@ import (
 	"github.com/inhere/go-web-skeleton/cmd"
 )
 
-// for test run: go build ./demo/cliapp.go && ./cliapp
+// for test run: go build ./cmd/cliapp && ./cliapp
 func main() {
 	runtime.GOMAXPROCS(runtime.NumCPU())
 

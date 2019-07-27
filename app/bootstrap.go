@@ -7,6 +7,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/gookit/config/v2/dotnev"
 	"github.com/gookit/config/v2/ini"
 	"github.com/gookit/i18n"
 	"github.com/gookit/rux"
@@ -20,15 +21,12 @@ import (
 )
 
 // components of the application
-var (
-	View *view.Renderer
-)
 
 // BootWeb Bootstrap web application
 func BootWeb() {
-	initApp()
+	initEnv()
 
-	initAppEnv()
+	initApp()
 
 	loadAppConfig()
 
@@ -50,20 +48,18 @@ func BootWeb() {
 	listenSignals()
 }
 
-func initApp() {
-	// view templates
-	View = view.NewInitialized(func(r *view.Renderer) {
-		r.ViewsDir = "resource/views"
-	})
-}
+func initEnv() {
+	err := dotnev.LoadExists("./", ".env")
+	if err != nil {
+		Fatalf("Fail to load env file: %v", err)
+	}
 
-func initAppEnv() {
 	Hostname, _ = os.Hostname()
-	if env := os.Getenv("APP_ENV"); env != "" {
+	if env := config.GetEnv("APP_ENV"); env != "" {
 		Env = env
 	}
 
-	if port := os.Getenv("APP_PORT"); port != "" {
+	if port := config.GetEnv("APP_PORT"); port != "" {
 		HttpPort, _ = strconv.Atoi(port)
 	}
 
@@ -75,25 +71,26 @@ func initAppEnv() {
 	}
 }
 
+func initApp() {
+	// view templates
+	view.Initialize(func(r *view.Renderer) {
+		r.ViewsDir = "resource/views"
+	})
+}
+
 // loadAppConfig
 func loadAppConfig() {
-	var err error
-
-	// add ini driver
-	config.AddDriver(ini.Driver)
-
 	envFile := "config/app-" + Env + ".ini"
 
 	fmt.Printf("- work dir: %s\n", WorkDir)
 	fmt.Printf("- load config: config/app.ini, %s\n", envFile)
 
-	err = config.LoadFiles("config/app.ini", envFile)
+	// add ini driver
+	config.AddDriver(ini.Driver)
+	err := config.LoadFiles("config/app.ini", envFile)
 	if err != nil {
-		fmt.Printf("Fail to read file: %v", err)
-		os.Exit(1)
+		Fatalf("Fail to read file: %v", err)
 	}
-
-	// ini.WriteTo(os.Stdout)
 
 	// setting some info
 	Name = config.String("name")

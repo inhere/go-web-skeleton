@@ -1,6 +1,8 @@
 package app
 
 import (
+	"fmt"
+	"os"
 	"time"
 
 	"github.com/gookit/color"
@@ -9,8 +11,14 @@ import (
 // Printf message
 func Printf(format string, args ...interface{}) {
 	if debug {
-		color.Println("[DEBUG]")
+		color.Println("<mga>[DEBUG] </mga>", fmt.Sprintf(format, args...))
 	}
+}
+
+// Fatalf message
+func Fatalf(format string, args ...interface{})  {
+	color.Println("<error>[ERROR] </error>", fmt.Sprintf(format, args...))
+	os.Exit(1)
 }
 
 // FormatPageAndSize

@@ -37,7 +37,7 @@ makefile  编写了一些通用的快捷命令，帮助打包，构建docker，�
 ... ...
 ```
 
-> 参考 https://github.com/golang-standards/project-layout
+> Project Github https://github.com/inhere/go-web-skeleton
 
 ## 使用的包
 

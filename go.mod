@@ -14,7 +14,7 @@ require (
 	github.com/gookit/i18n v1.1.0
 	github.com/gookit/ini/v2 v2.0.3
 	github.com/gookit/rux v1.1.3
-	github.com/gookit/view v1.0.1
+	github.com/gookit/view v1.0.2
 	github.com/json-iterator/go v1.1.6
 	github.com/pkg/errors v0.8.1
 	github.com/sirupsen/logrus v1.4.2

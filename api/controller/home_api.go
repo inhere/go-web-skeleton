@@ -4,6 +4,7 @@ import (
 	"os"
 
 	"github.com/gookit/rux"
+	"github.com/gookit/view"
 	"github.com/inhere/go-web-skeleton/app"
 )
 
@@ -24,7 +25,7 @@ func SwagDoc(c *rux.Context) {
 	}
 
 	// c.HTML(200, nil)
-	app.View.Partial(c.Resp, "swagger.tpl", data)
+	view.Partial(c.Resp, "swagger.tpl", data)
 }
 
 // @Tags InternalApi
