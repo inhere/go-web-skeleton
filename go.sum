@@ -59,6 +59,8 @@ github.com/gookit/gcli/v2 v2.0.8/go.mod h1:joqoISZkXc08SktR3mAwaZEPyPsLuPWZHkud1
 github.com/gookit/goutil v0.1.2/go.mod h1:3lBTrzsCHr3OpPJIsaRy+MRiLEXkb20MGLmEmYnlfto=
 github.com/gookit/goutil v0.1.3 h1:1J0gsOdNn/L5flVyrpNLo8BxH21GaWBVSG3P1u4PyOA=
 github.com/gookit/goutil v0.1.3/go.mod h1:3lBTrzsCHr3OpPJIsaRy+MRiLEXkb20MGLmEmYnlfto=
+github.com/gookit/goutil v0.1.4-0.20190727070133-2fd91b043d1e h1:mMT7vcggdus48E5ddm1N4BvsXPwAmRURpbjka0EKiCE=
+github.com/gookit/goutil v0.1.4-0.20190727070133-2fd91b043d1e/go.mod h1:3lBTrzsCHr3OpPJIsaRy+MRiLEXkb20MGLmEmYnlfto=
 github.com/gookit/i18n v1.1.0 h1:ANfXCsZvDDgofYIay4KKmucsIy2wjTBNLzcI+e+ajgw=
 github.com/gookit/i18n v1.1.0/go.mod h1:topSGCh/aLr7oi6MPwULH6pAq1micKBslqBqlwnCvF4=
 github.com/gookit/ini/v2 v2.0.2/go.mod h1:u250RBnqr4Aw3NueRW28/j6ykCcDAemGV6HGfXV02Hw=
