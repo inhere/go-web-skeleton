@@ -1,25 +1,8 @@
 package app
 
 import (
-	"fmt"
-	"os"
 	"time"
-
-	"github.com/gookit/color"
 )
-
-// Printf message
-func Printf(format string, args ...interface{}) {
-	if debug {
-		color.Println("<mga>[DEBUG] </mga>", fmt.Sprintf(format, args...))
-	}
-}
-
-// Fatalf message
-func Fatalf(format string, args ...interface{})  {
-	color.Println("<error>[ERROR] </error>", fmt.Sprintf(format, args...))
-	os.Exit(1)
-}
 
 // FormatPageAndSize
 func FormatPageAndSize(page int, size int) (int, int) {
@@ -39,12 +22,6 @@ func LocUnixTime() int64 {
 	return time.Now().Local().Unix()
 }
 
-// LocTime get local time
-func LocTime() time.Time {
-	// loc, _ := time.LoadLocation(Timezone)
-	// return time.Now().In(loc)
-	return time.Now().Local()
-}
 
 // PRCTime get PRC local time
 func PRCTime() time.Time {

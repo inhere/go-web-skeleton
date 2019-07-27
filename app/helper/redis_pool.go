@@ -1,4 +1,4 @@
-package app
+package helper
 
 import (
 	"time"
@@ -7,6 +7,7 @@ import (
 )
 
 // create new redis pool
+// @see https://git-books.github.io/books/go-web-programme/?p=05.6.md
 func NewRedisPool(url, password string, redisDb int) *redis.Pool {
 	return &redis.Pool{
 		MaxIdle:     100,
@@ -36,19 +37,7 @@ func NewRedisPool(url, password string, redisDb int) *redis.Pool {
 }
 
 // @see https://git-books.github.io/books/go-web-programme/?p=05.6.md
-func CloseRedisPool(pl *redis.Pool) error {
-	return pl.Close()
-}
-
-// @see https://git-books.github.io/books/go-web-programme/?p=05.6.md
-// func closePool() {
-//    c := make(chan os.Signal, 1)
-//    signal.Notify(c, os.Interrupt)
-//    signal.Notify(c, syscall.SIGTERM)
-//    signal.Notify(c, syscall.SIGKILL)
-//    go func() {
-//        <-c
-//        Pool.Close()
-//        os.Exit(0)
-//    }()
+// func CloseRedisPool(pl *redis.Pool) error {
+// 	return pl.Close()
 // }
+

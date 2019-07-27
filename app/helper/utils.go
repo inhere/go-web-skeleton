@@ -6,7 +6,6 @@ import (
 	"encoding/base64"
 	"encoding/hex"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"net"
 	"os"
@@ -36,6 +35,13 @@ func GenMd5(s string) string {
 	h.Write([]byte(s))
 
 	return hex.EncodeToString(h.Sum(nil))
+}
+
+// LocTime get local time
+func LocTime() time.Time {
+	// loc, _ := time.LoadLocation(Timezone)
+	// return time.Now().In(loc)
+	return time.Now().Local()
 }
 
 // Base64Encode
@@ -76,33 +82,6 @@ func InternalIP() (ip string) {
 	return
 }
 
-// WriteJsonFile
-func WriteJsonFile(filePath string, data interface{}) error {
-	jsonBytes, err := JsonEncode(data)
-	if err != nil {
-		return err
-	}
-
-	return ioutil.WriteFile(filePath, jsonBytes, 0664)
-}
-
-// ReadJsonFile
-func ReadJsonFile(filePath string, v interface{}) error {
-	file, err := os.Open(filePath)
-	if err != nil {
-		return err
-	}
-	defer file.Close()
-
-	content, err := ioutil.ReadAll(file)
-
-	if err != nil {
-		return err
-	}
-
-	return JsonDecode(content, v)
-}
-
 // JsonEncode encode data to json bytes. use it instead of json.Marshal
 func JsonEncode(v interface{}) ([]byte, error) {
 	var parser = jsoniter.ConfigCompatibleWithStandardLibrary
@@ -123,7 +102,6 @@ func JsonDecode(json []byte, v interface{}) error {
 // 相当于是在合并两个结构体(data 必须是 model 的子集)
 func Filling(data interface{}, model interface{}) error {
 	jsonBytes, _ := JsonEncode(data)
-
 	return JsonDecode(jsonBytes, model)
 }
 

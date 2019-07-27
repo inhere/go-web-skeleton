@@ -3,38 +3,67 @@ package cache
 import (
 	"fmt"
 	"log"
+	"strconv"
 	"time"
 
 	"github.com/gomodule/redigo/redis"
+	"github.com/gookit/config/v2"
 	"github.com/gookit/goutil/calc"
 	"github.com/gookit/goutil/jsonutil"
+	"github.com/inhere/go-web-skeleton/app/clog"
+	"github.com/inhere/go-web-skeleton/app/helper"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 )
 
-var debug bool
-var cachePrefix string
-var pool *redis.Pool
+var (
+	debug  bool
+	enable bool
+	prefix string
+	pool   *redis.Pool
+)
 
-// init cache
+// init cache redis conn pool
 // ref package: github.com/astaxie/beego/cache/redis
 // redigo doc https://godoc.org/github.com/gomodule/redigo/redis#pkg-examples
-func Init(pl *redis.Pool, prefix string, d bool) {
-	// 建立连接池
-	pool = pl
+func Init(d bool) {
+	enable = config.Bool("db.enable")
+	if !enable {
+		clog.Debugf("cache is disabled, skip init it")
+		return
+	}
+
 	debug = d
-	cachePrefix = prefix
+	// 从配置文件获取redis的ip以及db
+	conf := config.StringMap("cache")
+	prefix = conf["prefix"]
+	server := conf["server"]
+	password := conf["auth"]
+	redisDb, _ := strconv.Atoi(conf["db"])
+
+	fmt.Printf("cache config - server=%s db=%d auth=%s\n", server, redisDb, password)
+
+	// 建立连接池
+	pool = helper.NewRedisPool(server, password, redisDb)
+}
+
+// ClosePool Close pool
+func ClosePool() error {
+	if enable {
+		return pool.Close()
+	}
+	return nil
 }
 
 // GenKey gen cache key
 func GenKey(tpl string, keys ...interface{}) string {
-	// return cachePrefix + fmt.Sprintf(tpl, keys...)
+	// return prefix + fmt.Sprintf(tpl, keys...)
 	// 初始化缓存时已经设置了前缀了
 	return fmt.Sprintf(tpl, keys...)
 }
 
 // Get cache and map to a struct
-// usage:
+// Usage:
 // 	cache.GetAndMapTo("key", &User{})
 func GetAndMapTo(key string, v interface{}) (err error) {
 	var ret interface{}
@@ -44,7 +73,6 @@ func GetAndMapTo(key string, v interface{}) (err error) {
 		// data must convert to byte
 		return jsonutil.Decode(ret.([]byte), v)
 	}
-
 	return
 }
 
@@ -53,7 +81,6 @@ func Get(key string) interface{} {
 	if v, err := exec("get", key); err == nil {
 		return v
 	}
-
 	return nil
 }
 
@@ -62,7 +89,6 @@ func Set(key string, data interface{}, ttl int) error {
 	jsonBytes, _ := jsonutil.Encode(data)
 
 	_, err := exec("setEx", key, int64(ttl), jsonBytes)
-
 	return err
 }
 
@@ -94,14 +120,13 @@ func exec(commandName string, args ...interface{}) (reply interface{}, err error
 	}
 
 	var fullKey string
-	if cachePrefix != "" {
-		fullKey = fmt.Sprintf("%s:%s", cachePrefix, args[0])
+	if prefix != "" {
+		fullKey = fmt.Sprintf("%s:%s", prefix, args[0])
 	} else {
 
 	}
 
 	args[0] = fullKey
-
 	if debug {
 		st := time.Now()
 		c := Connection()
@@ -123,7 +148,7 @@ func exec(commandName string, args ...interface{}) (reply interface{}, err error
 }
 
 // Connection return redis connection.
-// usage:
+// Usage:
 //   conn := redis.Connection()
 //   defer conn.Close()
 //   ... do something ...

@@ -52,7 +52,7 @@ Makefile    Has written some common shortcut commands to help package, build doc
   - [sirupsen/logrus](https://github.com/sirupsen/logrus)
     - Log splitting: [rifflock/lfshook](https://github.com/rifflock/lfshook)
     - Log splitting: [lestrrat-go/file-rotatelogs](https://github.com/lestrrat-go/file-rotatelogs)
-  - [go.uber.org/zap](https://github.com/uber-go/zap)
+  - [go.uber.org/zap](https://github.com/uber-go/zap)
 - Mysql, etc.:
   - [go-xorm/xorm](https://github.com/go-xorm/xorm)
   - [jinzhu/gorm](https://github.com/jinzhu/gorm)

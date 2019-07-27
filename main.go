@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"os"
 
 	"github.com/inhere/go-web-skeleton/api"
@@ -32,7 +31,10 @@ func init() {
 }
 
 func main() {
-	log.Printf("======================== Begin Running(PID: %d) ========================", os.Getpid())
+	fmt.Printf(
+		"======================== Begin Running(PID: %d) ========================\n",
+		os.Getpid(),
+	)
 
 	// default is listen and serve on 0.0.0.0:8080
 	router.Listen(fmt.Sprintf("0.0.0.0:%d", app.HttpPort))

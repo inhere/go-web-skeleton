@@ -2,15 +2,21 @@ package app
 
 import (
 	"fmt"
-	"log"
 	"os"
 	"strconv"
 	"strings"
 
 	"github.com/gookit/config/v2/dotnev"
 	"github.com/gookit/config/v2/ini"
+	"github.com/gookit/gcli/v2/show"
+	"github.com/gookit/goutil/jsonutil"
 	"github.com/gookit/i18n"
 	"github.com/gookit/rux"
+	"github.com/inhere/go-web-skeleton/app/clog"
+	"github.com/inhere/go-web-skeleton/app/listener"
+	"github.com/inhere/go-web-skeleton/model/mongo"
+	"github.com/inhere/go-web-skeleton/model/mysql"
+	"github.com/inhere/go-web-skeleton/model/rds"
 
 	"github.com/gookit/config/v2"
 	"github.com/inhere/go-web-skeleton/app/helper"
@@ -26,32 +32,29 @@ import (
 func BootWeb() {
 	initEnv()
 
+	initConfig()
+
 	initApp()
-
-	loadAppConfig()
-
-	log.Printf(
-		"======================== Bootstrap (Env: %s, Debug: %v) ========================",
-		Env, debug,
-	)
 
 	initAppInfo()
 
 	initLogger()
 
-	initLanguage()
+	initI18n()
 
-	initCache()
+	// init cache redis connection pool
+	cache.Init(debug)
 
 	// initEurekaService()
 
-	listenSignals()
+	// listen exit signal
+	listener.ListenSignals(onExit)
 }
 
 func initEnv() {
 	err := dotnev.LoadExists("./", ".env")
 	if err != nil {
-		Fatalf("Fail to load env file: %v", err)
+		clog.Fatalf("Fail to load env file: %v", err)
 	}
 
 	Hostname, _ = os.Hostname()
@@ -71,30 +74,48 @@ func initEnv() {
 	}
 }
 
+// initConfig load app config
+func initConfig() {
+	envFile := "config/app-" + Env + ".ini"
+
+	show.AList("project information", map[string]string{
+		"Work directory": WorkDir,
+		"Loaded config":  "config/app.ini, " + envFile,
+	}, nil)
+
+	// fmt.Printf("- work directory: %s\n", WorkDir)
+	// fmt.Printf("- loaded config: config/app.ini, %s\n", envFile)
+
+	// add ini driver
+	config.AddDriver(ini.Driver)
+	config.WithOptions(config.Readonly)
+
+	err := config.LoadFiles("config/app.ini", envFile)
+	if err != nil {
+		clog.Fatalf("Fail to read file: %v", err)
+	}
+
+	// setting some info
+	// _= config.LoadData(map[string]interface{}{
+	// 	"env": Env,
+	// 	"debug": debug,
+	// })
+	Name = config.String("name")
+	debug = config.Bool("debug")
+
+	fmt.Printf(
+		"======================== Bootstrap (Env: %s, Debug: %v) ========================\n",
+		Env, debug,
+	)
+
+	clog.SetDebug(debug)
+}
+
 func initApp() {
 	// view templates
 	view.Initialize(func(r *view.Renderer) {
 		r.ViewsDir = "resource/views"
 	})
-}
-
-// loadAppConfig
-func loadAppConfig() {
-	envFile := "config/app-" + Env + ".ini"
-
-	fmt.Printf("- work dir: %s\n", WorkDir)
-	fmt.Printf("- load config: config/app.ini, %s\n", envFile)
-
-	// add ini driver
-	config.AddDriver(ini.Driver)
-	err := config.LoadFiles("config/app.ini", envFile)
-	if err != nil {
-		Fatalf("Fail to read file: %v", err)
-	}
-
-	// setting some info
-	Name = config.String("name")
-	debug = config.Bool("debug")
 }
 
 func initAppInfo() {
@@ -108,39 +129,18 @@ func initAppInfo() {
 	infoFile := "static/app.json"
 
 	if helper.FileExists(infoFile) {
-		helper.ReadJsonFile(infoFile, &GitInfo)
+		_ = jsonutil.ReadFile(infoFile, &GitInfo)
 	}
 }
 
-// init redis connection pool
-func initCache() {
-	conf := config.StringMap("cache")
-	if conf["enable"] == "0" {
-		Printf("cache is disabled, skip init it")
-		return
-	}
-
-	// 从配置文件获取redis的ip以及db
-	prefix := conf["prefix"]
-	server := conf["server"]
-	password := conf["auth"]
-	redisDb, _ := strconv.Atoi(conf["db"])
-
-	fmt.Printf("cache config - server=%s db=%d auth=%s\n", server, redisDb, password)
-
-	// 建立连接池
-	// closePool()
-	cache.Init(NewRedisPool(server, password, redisDb), prefix, debug)
-}
-
-func initLanguage() {
+func initI18n() {
 	// conf := map[string]string{
 	// 	"langDir": "res/lang",
 	// 	"allowed": "en:English|zh-CN:简体中文",
 	// 	"default": "en",
 	// }
 	conf := config.StringMap("lang")
-	fmt.Printf("language config - %v\n", conf)
+	clog.Printf("language config - %v", conf)
 
 	// en:English|zh-CN:简体中文
 	langList := strings.Split(conf["allowed"], "|")
@@ -153,4 +153,27 @@ func initLanguage() {
 
 	// init and load data
 	i18n.Init(conf["langDir"], conf["default"], languages)
+}
+
+func onExit() {
+	var err error
+	// sync logs
+	// logrus.
+
+	// unregister from eureka
+	// erkServer.Unregister()
+
+	// close db,redis connection
+	mongo.CloseSession()
+
+	err = mysql.CloseEngine()
+	if err != nil {
+		clog.Errorf("Close mysql error: %s", err.Error())
+	}
+
+	err = rds.ClosePool()
+	if err != nil {
+		clog.Errorf("Close redis error: %s", err.Error())
+	}
+
 }

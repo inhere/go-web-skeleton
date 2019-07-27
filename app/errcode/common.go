@@ -3,7 +3,7 @@ package errcode
 import "errors"
 
 // Predefined const error codes.
-// message please see /resources/languages/*.ini
+// message please see /resource/lang/*.ini
 const (
 	OK  = 0
 	ERR = 500

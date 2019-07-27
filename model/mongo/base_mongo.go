@@ -10,7 +10,7 @@ import (
 	"github.com/globalsign/mgo"
 	"github.com/globalsign/mgo/bson"
 	"github.com/gookit/config/v2"
-	"github.com/inhere/go-web-skeleton/app"
+	"github.com/inhere/go-web-skeleton/app/clog"
 	"github.com/inhere/go-web-skeleton/app/errcode"
 )
 
@@ -24,7 +24,9 @@ type DebugLogger struct {
 }
 
 var (
-	connection *mgo.Session
+	debug  bool
+	enable  bool
+	session *mgo.Session
 
 	auth, servers, mgoUri, database string
 )
@@ -34,28 +36,28 @@ var (
 )
 
 func init() {
-	if app.IsDebug() {
+	enable = config.Bool("db.enable")
+	if !enable {
+		clog.Debugf("mongo is disabled, skip init mongo connection")
+		return
+	}
+
+	if config.Bool("debug") {
 		// 设为 true 数据打印太多了
 		mgo.SetDebug(false)
 		// mgo.SetLogger(DebugLogger{})
 	}
 
 	// get config
-	enable := config.Bool("mgo.enable", false)
-	if !enable {
-		app.Printf("mongo is disabled, skip init mongo connection")
-		return
-	}
-
 	auth = config.String("mgo.auth")
 	mgoUri = config.String("mgo.uri")
 	servers = config.String("mgo.servers")
 	database = config.String("mgo.database")
 
-	fmt.Printf("mongo config - %s db=%s\n", servers, database)
+	clog.Printf("mongo config - %s db=%s", servers, database)
 
-	// create connection
-	createConnection()
+	// create session
+	createSession()
 }
 
 func (d DebugLogger) Output(calldepth int, s string) error {
@@ -63,45 +65,52 @@ func (d DebugLogger) Output(calldepth int, s string) error {
 	return nil
 }
 
-// Create connection
-func createConnection() {
+// Create session
+func createSession() {
 	var err error
-	connection, err = mgo.Dial(auth + "@" + servers + mgoUri)
 
+	session, err = mgo.Dial(auth + "@" + servers + mgoUri)
 	if err != nil {
 		panic(err) // 直接终止程序运行
 	}
 
 	// Optional. Switch the session to a monotonic behavior.
-	// connection.SetMode(mgo.Monotonic, true)
+	// session.SetMode(mgo.Monotonic, true)
 	// 最大连接池默认为 4096
-	connection.SetPoolLimit(1024)
+	session.SetPoolLimit(1024)
 }
 
-// Connection return mongodb connection.
-// usage:
+// Connection return new mongodb connection.
+// Usage:
 //   conn := mongo.Connection()
 //   defer conn.Close()
 //   ... do something ...
 func Connection() *mgo.Session {
-	if connection == nil {
-		createConnection()
+	if session == nil {
+		createSession()
 	}
 
-	return connection.Clone()
+	return session.Clone()
 }
 
 // WithCollection 公共方法，使用 collection 对象
-// usage:
+// Usage:
 //   error = mongo.WithCollection("name", func (conn *mgo.Collection) error {
 //       ... do something ...
 //   })
 func WithCollection(collection string, s func(*mgo.Collection) error) error {
 	conn := Connection()
 	defer conn.Close()
-	c := conn.DB(database).C(collection)
 
+	c := conn.DB(database).C(collection)
 	return s(c)
+}
+
+// CloseSession close mgo connection session
+func CloseSession() {
+	if enable {
+		session.Close()
+	}
 }
 
 /**
@@ -109,7 +118,7 @@ func WithCollection(collection string, s func(*mgo.Collection) error) error {
 */
 
 // FindById Finding a record by primary key ID
-// usage:
+// Usage:
 // m := &mongo.Moment{}  // NOTICE: please use ref
 // mongo.FindById("collection name", "id", m)
 func FindById(cName string, id string, model interface{}, fields string) (code int, err error) {

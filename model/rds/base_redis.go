@@ -7,11 +7,16 @@ import (
 
 	"github.com/gomodule/redigo/redis"
 	"github.com/gookit/config/v2"
-	"github.com/inhere/go-web-skeleton/app"
+	"github.com/inhere/go-web-skeleton/app/clog"
+	"github.com/inhere/go-web-skeleton/app/helper"
 	"github.com/sirupsen/logrus"
 )
 
-var pool *redis.Pool
+var (
+	debug bool
+	enable bool
+	pool *redis.Pool
+)
 
 // redisPrefix
 const redisPrefix = "feeds:"
@@ -28,8 +33,10 @@ func GenRedisKey(tpl string, keys ...interface{}) string {
 // init redis connection pool
 // redigo doc https://godoc.org/github.com/gomodule/redigo/redis#pkg-examples
 func init() {
-	if !config.Bool("redis.enable") {
-		app.Printf("redis is disabled, skip init redis connection")
+	debug = config.Bool("debug")
+	enable = config.Bool("redis.enable")
+	if !enable {
+		clog.Debugf("redis is disabled, skip init redis connection")
 		return
 	}
 
@@ -40,15 +47,22 @@ func init() {
 	password := conf["auth"]
 	redisDb, _ := strconv.Atoi(conf["db"])
 
-	fmt.Printf("redis - server=%s db=%d auth=%s\n", redisUrl, redisDb, password)
+	clog.Printf("redis - server=%s db=%d auth=%s\n", redisUrl, redisDb, password)
 
 	// 建立连接池
-	pool = app.NewRedisPool(redisUrl, password, redisDb)
-	// closePool()
+	pool = helper.NewRedisPool(redisUrl, password, redisDb)
+}
+
+// ClosePool close redis pool
+func ClosePool() error {
+	if enable {
+		return pool.Close()
+	}
+	return nil
 }
 
 // Connection return redis connection.
-// usage:
+// Usage:
 //   conn := redis.Connection()
 //   defer conn.Close()
 //   ... do something ...
@@ -60,7 +74,7 @@ func Connection() redis.Conn {
 	)
 
 	// 记录操作日志
-	if app.IsDebug() {
+	if debug {
 		w := logrus.StandardLogger().Writer()
 		return redis.NewLoggingConn(pool.Get(), log.New(w, "", 0), "rds")
 	}
@@ -69,7 +83,7 @@ func Connection() redis.Conn {
 }
 
 // WithConnection 公共方法，使用 collection 对象
-// usage:
+// Usage:
 //   error = redis.WithConnection(func (c redis.Conn) error {
 //       ... do something ...
 //   })

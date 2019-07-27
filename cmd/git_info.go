@@ -7,7 +7,7 @@ import (
 	"github.com/gookit/color"
 	"github.com/gookit/gcli/v2"
 	"github.com/gookit/goutil/cliutil"
-	"github.com/inhere/go-web-skeleton/app/helper"
+	"github.com/gookit/goutil/jsonutil"
 	"github.com/inhere/go-web-skeleton/model"
 )
 
@@ -72,7 +72,7 @@ func gitExecute(_ *gcli.Command, _ []string) (err error) {
 		fmt.Printf("latest tag: %s\n", tag)
 	}
 
-	err = helper.WriteJsonFile(gitOpts.output, &info)
+	err = jsonutil.WriteFile(gitOpts.output, &info)
 	if err != nil {
 		return
 	}
