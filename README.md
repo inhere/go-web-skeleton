@@ -46,14 +46,16 @@ Makefile    Has written some common shortcut commands to help package, build doc
 
 - Http routing: [gookit/rux](https://github.com/gookit/rux)
 - Configure read management:
-  - Multiple format configurations: [gookit/config] (https://github.com/gookit/config)
-  - INI configuration: [gookit/ini] (https://github.com/gookit/ini)
+  - Multiple format configurations: [gookit/config](https://github.com/gookit/config)
+  - INI configuration: [gookit/ini](https://github.com/gookit/ini)
 - Logging:
-  - [sirupsen/logrus] (https://github.com/sirupsen/logrus)
-    - Log splitting: [rifflock/lfshook] (https://github.com/rifflock/lfshook)
-    - Log splitting: [lestrrat-go/file-rotatelogs] (https://github.com/lestrrat-go/file-rotatelogs)
-  - Logging: [go.uber.org/zap] (https://github.com/uber-go/zap)
-- Mysql, etc.: [go-xorm/xorm](https://github.com/go-xorm/xorm)
+  - [sirupsen/logrus](https://github.com/sirupsen/logrus)
+    - Log splitting: [rifflock/lfshook](https://github.com/rifflock/lfshook)
+    - Log splitting: [lestrrat-go/file-rotatelogs](https://github.com/lestrrat-go/file-rotatelogs)
+  - [go.uber.org/zap](https://github.com/uber-go/zap)
+- Mysql, etc.:
+  - [go-xorm/xorm](https://github.com/go-xorm/xorm)
+  - [jinzhu/gorm](https://github.com/jinzhu/gorm)
 - Mongodb: [github.com/globalsign/mgo](https://github.com/globalsign/mgo)
 - Cache: [gookit/cache](https://github.com/gookit/cache)
 - Redis
@@ -84,7 +86,8 @@ Makefile    Has written some common shortcut commands to help package, build doc
 
 ## Start
 
-- First, clone the skeleton repository to your local directory and rename the `go-web-skeleton` directory to your project name.
+- First, clone the skeleton repository to your local directory
+- Rename the `go-web-skeleton` directory to your project name.
 - Go to the project and replace `github.com/inhere/go-web-skeleton` with your project name (for go file)
 - Search again and replace all `go-web-skeleton` with your project name (mainly Dockerfile, makefile)
 - Run `dep ensure` to install dependent libraries to the vendor

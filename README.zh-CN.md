@@ -51,8 +51,10 @@ makefile  编写了一些通用的快捷命令，帮助打包，构建docker，�
   - [sirupsen/logrus](https://github.com/sirupsen/logrus)
     - 日志分割：[rifflock/lfshook](https://github.com/rifflock/lfshook)
     - 日志分割：[lestrrat-go/file-rotatelogs](https://github.com/lestrrat-go/file-rotatelogs)
-  - 日志记录：[go.uber.org/zap](https://github.com/uber-go/zap)
-- mysql等：[go-xorm/xorm](https://github.com/go-xorm/xorm)
+  - [go.uber.org/zap](https://github.com/uber-go/zap)
+- mysql等：
+  - [go-xorm/xorm](https://github.com/go-xorm/xorm)
+  - [jinzhu/gorm](https://github.com/jinzhu/gorm)
 - mongodb: [github.com/globalsign/mgo](https://github.com/globalsign/mgo)
 - cache: [gookit/cache](https://github.com/gookit/cache) 
 - redis
@@ -83,7 +85,8 @@ makefile  编写了一些通用的快捷命令，帮助打包，构建docker，�
 
 ## 开始使用
 
-- 首先，将骨架仓库clone到你的本机目录，重命名 `go-web-skeleton` 目录为你的项目名
+- 首先，将骨架仓库clone到你的本机目录
+- 重命名 `go-web-skeleton` 目录为你的项目名
 - 进入到项目，将项目中 `github.com/inhere/go-web-skeleton` 替换为你的项目名(针对go文件)
 - 再搜索将所有的`go-web-skeleton`替换为你的项目名（主要是Dockerfile,makefile里）
 - 运行 `dep ensure` 安装依赖库到vendor
