@@ -24,7 +24,7 @@ type DebugLogger struct {
 }
 
 var (
-	debug  bool
+	debug   bool
 	enable  bool
 	session *mgo.Session
 

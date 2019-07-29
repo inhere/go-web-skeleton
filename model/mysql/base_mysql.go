@@ -15,7 +15,7 @@ import (
 )
 
 var (
-	debug bool
+	debug  bool
 	enable bool
 	engine *xorm.Engine
 )

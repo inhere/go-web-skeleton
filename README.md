@@ -73,8 +73,8 @@ Makefile    Has written some common shortcut commands to help package, build doc
 ### Auxiliary Library
 
 - swagger document generation:
-  - go-swagger documents are more complex and more powerful
-  - [swaggo/swag](https://github.com/swaggo/swag)Documents and usage are relatively simple, only generating documents is enough
+  - [go-swagger](https://github.com/go-swagger/go-swagger) The documentation is complex but more powerful
+  - [swaggo/swag](https://github.com/swaggo/swag) Documents and usage are relatively simple, only generating documents is enough
 - Test the auxiliary library for quick assertion [stretchr/testify](https://github.com/stretchr/testify)
 - Debugging tool: [davecgh/go-spew](https://github.com/davecgh/go-spew) Deep printing golang variable data
 
@@ -135,8 +135,10 @@ Go test -cover
 - Formatting project
 
 ```bash
+gofmt -s -l ./
 go fmt ./...
 ```
+
 - Run GoLint check
 
 > Note: You need to install `GoLint` first.

@@ -40,4 +40,3 @@ func NewRedisPool(url, password string, redisDb int) *redis.Pool {
 // func CloseRedisPool(pl *redis.Pool) error {
 // 	return pl.Close()
 // }
-

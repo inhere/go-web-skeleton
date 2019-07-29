@@ -29,12 +29,12 @@ func Debugf(format string, args ...interface{}) {
 }
 
 // Errorf print an error message
-func Errorf(format string, args ...interface{})  {
+func Errorf(format string, args ...interface{}) {
 	color.Println("<red>[ERROR] </>", fmt.Sprintf(format, args...))
 }
 
 // Fatalf print an error fatal message an exit
-func Fatalf(format string, args ...interface{})  {
+func Fatalf(format string, args ...interface{}) {
 	color.Println("<danger>[FATAL] </>", fmt.Sprintf(format, args...))
 	os.Exit(1)
 }

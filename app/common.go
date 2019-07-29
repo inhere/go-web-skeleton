@@ -22,7 +22,6 @@ func LocUnixTime() int64 {
 	return time.Now().Local().Unix()
 }
 
-
 // PRCTime get PRC local time
 func PRCTime() time.Time {
 	loc, _ := time.LoadLocation(Timezone)

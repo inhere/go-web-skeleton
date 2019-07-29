@@ -1,4 +1,4 @@
-package cmd
+package handler
 
 import (
 	"fmt"
@@ -18,7 +18,7 @@ var gitOpts = &struct {
 // GitCommand
 func GitCommand() *gcli.Command {
 	cmd := gcli.Command{
-		Name:    "git",
+		Name:    "git:info",
 		Aliases: []string{"git-info"},
 		UseFor:  "collect project info by git info",
 		Func:    gitExecute,

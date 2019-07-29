@@ -153,11 +153,9 @@ func exec(commandName string, args ...interface{}) (reply interface{}, err error
 //   defer conn.Close()
 //   ... do something ...
 func Connection() redis.Conn {
-	logrus.Info("get new redis connection from pool",
-		// zap.Namespace("context"),
-		// zap.Int("IdleCount", pool.IdleCount()),
-		// zap.Int("ActiveCount", pool.ActiveCount()),
-	)
+	logrus.Info("get new redis connection from pool")// zap.Namespace("context"),
+	// zap.Int("IdleCount", pool.IdleCount()),
+	// zap.Int("ActiveCount", pool.ActiveCount()),
 
 	// 记录操作日志
 	if debug {

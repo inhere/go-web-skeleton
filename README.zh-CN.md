@@ -72,7 +72,7 @@ makefile  编写了一些通用的快捷命令，帮助打包，构建docker，�
 ### 辅助库
 
 - swagger 文档生成：
-  - go-swagger 文档复杂，功能更强大
+  - [go-swagger](https://github.com/go-swagger/go-swagger) 文档复杂，但是功能更强大
   - [swaggo/swag](https://github.com/swaggo/swag) 文档和使用比较简单，仅生成文档足够用了
 - 测试辅助库，方便快速断言 [stretchr/testify](https://github.com/stretchr/testify)
 - 调试工具：[davecgh/go-spew](https://github.com/davecgh/go-spew) 深度打印golang变量数据
