@@ -37,9 +37,9 @@ func handleSignals(c chan os.Signal, cb func()) {
 		cb()
 	}
 
-	// 等待一秒
+	// wait some time
 	time.Sleep(1e9 / 2)
 
-	color.Info.Println("Bye...")
+	color.Info.Println("GoodBye :) ...")
 	os.Exit(0)
 }
