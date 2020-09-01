@@ -1,8 +1,8 @@
-package api
+package web
 
 import (
 	"github.com/gookit/rux"
-	"github.com/inhere/go-web-skeleton/api/controller"
+	"github.com/inhere/go-web-skeleton/web/controller"
 )
 
 // AddRoutes add http routes

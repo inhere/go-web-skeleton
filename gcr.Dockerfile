@@ -2,7 +2,7 @@
 #
 # @build-example docker build . -f gcr.Dockerfile -t gcr:test
 #
-FROM golang:1.12 as build
+FROM golang:1.14 as build
 
 ENV APP_DIR $GOPATH/src/appointment
 RUN mkdir -p $APP_DIR

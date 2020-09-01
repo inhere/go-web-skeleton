@@ -32,7 +32,7 @@ func GitCommand() *gcli.Command {
 // arg test:
 // 	go build cliapp.go && ./cliapp git --id 12 -c val ag0 ag1
 func gitExecute(_ *gcli.Command, _ []string) (err error) {
-	info := model.GitInfoData{}
+	info := model.GitInfo{}
 
 	// latest commit id by: git log --pretty=%H -n1 HEAD
 	cid, err := cliutil.ShellExec("git log --pretty=%H -n1 HEAD")

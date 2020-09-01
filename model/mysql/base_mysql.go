@@ -4,71 +4,81 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"strconv"
 	"strings"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/go-xorm/xorm"
 	"github.com/gookit/config/v2"
+	"github.com/inhere/go-web-skeleton/app"
 	"github.com/inhere/go-web-skeleton/app/clog"
 	"github.com/inhere/go-web-skeleton/app/helper"
+	"xorm.io/core"
 )
 
+const DSNTemplate = "%s:%s@tcp(%s:%d)/%s?charset=utf8"
+
+type dbConfig struct {
+	Host string
+	Port int
+	User string
+	Name string
+	Password string
+
+	Disable bool
+	MaxIdleConn int
+	MaxOpenConn int
+}
+
 var (
-	debug  bool
-	enable bool
+	cfg dbConfig
 	engine *xorm.Engine
 )
 
-func init() {
-	debug = config.Bool("debug")
-	enable = config.Bool("db.enable")
-	if !enable {
+func InitMysql() (err error) {
+	err = config.MapStruct("db", &cfg)
+	if err != nil {
+		return
+	}
+
+	if cfg.Disable {
 		clog.Debugf("mysql is disabled, skip init mysql database connection")
 		return
 	}
 
-	db := config.StringMap("db")
-	dsn := fmt.Sprintf(
-		"%s:%s@tcp(%s:%s)/%s?charset=utf8",
-		db["user"], db["password"], db["host"], db["port"], db["name"],
-	)
-
-	clog.Printf("mysql config - %s\n", dsn)
-	var err error
-
-	maxIdleConn, _ := strconv.Atoi(db["maxIdleConn"])
-	maxOpenConn, _ := strconv.Atoi(db["MaxOpenConn"])
+	dsn := fmt.Sprintf(DSNTemplate, cfg.User, cfg.Password, cfg.Host, cfg.Port, cfg.Name, )
+	fmt.Printf("mysql - %s\n", dsn)
 
 	// create engine
 	engine, err = xorm.NewEngine("mysql", dsn)
 	if err != nil {
-		log.Fatalf("Init mysql DB Failure! Error: %s\n", err.Error())
+		// log.Fatalf("Init mysql DB Failure! Error: %s\n", err.Error())
+		return
 	}
 
-	engine.SetMaxIdleConns(maxIdleConn)
-	engine.SetMaxOpenConns(maxOpenConn)
+	engine.SetMaxIdleConns(cfg.MaxIdleConn)
+	engine.SetMaxOpenConns(cfg.MaxOpenConn)
 
 	// core.NewCacheMapper(core.SnakeMapper{})
 	// engine.SetDefaultCacher()
-
-	if debug {
+	if app.Debug {
 		engine.ShowSQL(true)
-		engine.Logger().SetLevel(xorm.DEFAULT_LOG_LEVEL)
+		engine.Logger().SetLevel(core.LOG_DEBUG)
 	}
 
 	// replace
 	logFile := config.String("log.sqlLog")
 	logFile = strings.NewReplacer(
 		"{date}", helper.LocTime().Format("20060102"),
+		"{hostname}", app.Hostname,
 	).Replace(logFile)
 
 	f, err := os.Create(logFile)
 	if err != nil {
-		clog.Fatalf("create db log file error: ", err.Error())
+		log.Fatal(err.Error())
 	}
 
 	engine.SetLogger(xorm.NewSimpleLogger(f))
+	return
 }
 
 // Db get db connection
@@ -78,10 +88,11 @@ func Db() *xorm.Engine {
 
 // CloseEngine Close mysql engine
 func CloseEngine() error {
-	if enable {
-		return engine.Close()
+	if cfg.Disable {
+		return nil
 	}
-	return nil
+
+	return engine.Close()
 }
 
 // UpdateById Update by ID

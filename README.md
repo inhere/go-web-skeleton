@@ -90,7 +90,7 @@ Makefile    Has written some common shortcut commands to help package, build doc
 - Rename the `go-web-skeleton` directory to your project name.
 - Go to the project and replace `github.com/inhere/go-web-skeleton` with your project name (for go file)
 - Search again and replace all `go-web-skeleton` with your project name (mainly Dockerfile, makefile)
-- Run `dep ensure` to install dependent libraries to the vendor
+- Run `go mod tidy` to install dependent libraries
 - Run the project: `go run main.go`
 
 ### Swagger Docs Generation
@@ -106,9 +106,9 @@ Go get -u github.com/swaggo/swag/cmd/swag
 Generated to the specified directory:
 
 ```bash
-Swag init -s static
+swag init -o static
 # This file will be generated at the same time. It can be deleted if it is not needed.
-rm docs/docs.go
+rm static/docs.go
 ```
 
 Notice:

@@ -89,7 +89,7 @@ makefile  编写了一些通用的快捷命令，帮助打包，构建docker，�
 - 重命名 `go-web-skeleton` 目录为你的项目名
 - 进入到项目，将项目中 `github.com/inhere/go-web-skeleton` 替换为你的项目名(针对go文件)
 - 再搜索将所有的`go-web-skeleton`替换为你的项目名（主要是Dockerfile,makefile里）
-- 运行 `dep ensure` 安装依赖库到vendor
+- 运行 `go mod tidy` 安装依赖库
 - 运行项目：`go run main.go`
 
 ## swagger文档生成
@@ -105,9 +105,9 @@ go get -u github.com/swaggo/swag/cmd/swag
 生成到指定目录下：
 
 ```bash
-swag init -s static
+swag init -o static
 # 同时会生成这个文件，不需要的可以删除掉
-rm docs/docs.go
+rm static/docs.go
 ```
 
 注意：

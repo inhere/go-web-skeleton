@@ -28,12 +28,3 @@ func PRCTime() time.Time {
 
 	return time.Now().In(loc)
 }
-
-// AbsPath always return abs path.
-func AbsPath(path string) string {
-	if string(path[0]) == "/" {
-		return path
-	}
-
-	return path
-}

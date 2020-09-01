@@ -8,30 +8,9 @@ import (
 	"github.com/gookit/i18n"
 	"github.com/gookit/rux"
 	"github.com/inhere/go-web-skeleton/app"
+	"github.com/inhere/go-web-skeleton/model"
 	"github.com/sirupsen/logrus"
 )
-
-// JsonData is api response body structure. HttpRes
-type JsonData struct {
-	Code    int         `json:"code" example:"0" description:"return status code, 0 is successful."`
-	Message string      `json:"message" description:"return message"`
-	Data    interface{} `json:"data" description:"return data"`
-}
-
-// JsonListData only use for swagger docs
-type JsonListData struct {
-	Code    int      `json:"code" description:"return code, 0 is successful."`
-	Message string   `json:"message" description:"return message"`
-	Data    []string `json:"data" description:"return data"`
-}
-
-// JsonMapData only use for swagger docs
-type JsonMapData struct {
-	Code    int    `json:"code" description:"return code, 0 is successful."`
-	Message string `json:"message" description:"return message"`
-
-	Data map[string]string `json:"data" description:"return data"`
-}
 
 // BaseApi controller
 type BaseApi struct {
@@ -52,7 +31,7 @@ func (a *BaseApi) getPageAndSize(c *rux.Context) (int, int) {
 func (a *BaseApi) JSON(c *rux.Context, status int, data interface{}) {
 	bs, err := jsonutil.Encode(data)
 	if err != nil {
-		c.Error(err)
+		c.AddError(err)
 		return
 	}
 
@@ -60,7 +39,7 @@ func (a *BaseApi) JSON(c *rux.Context, status int, data interface{}) {
 }
 
 // DataRes response json data
-func (a *BaseApi) DataRes(c *rux.Context, data interface{}) *JsonData {
+func (a *BaseApi) DataRes(c *rux.Context, data interface{}) *model.JsonData {
 	return a.MakeRes(0, nil, data)
 }
 
@@ -71,7 +50,7 @@ func (a *BaseApi) DataRes(c *rux.Context, data interface{}) *JsonData {
 // empty list:
 // 	c.DataRes([]int{})
 // err  real error message, the message will not output, only write to log file.
-func (a *BaseApi) MakeRes(code int, err error, data interface{}) *JsonData {
+func (a *BaseApi) MakeRes(code int, err error, data interface{}) *model.JsonData {
 	if data == nil {
 		// data = map[string]string{}
 		data = []string{}
@@ -85,10 +64,10 @@ func (a *BaseApi) MakeRes(code int, err error, data interface{}) *JsonData {
 		logrus.Warn("detected response error", "code", code, "message", err.Error())
 
 		// if open debug
-		if app.IsDebug() {
+		if app.Debug {
 			data = map[string]string{"debug_msg": err.Error()}
 		}
 	}
 
-	return &JsonData{code, friendlyMsg, data}
+	return &model.JsonData{Code: code, Message: friendlyMsg, Data: data}
 }

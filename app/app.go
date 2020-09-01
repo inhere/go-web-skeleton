@@ -3,15 +3,16 @@ package app
 import (
 	"os"
 
+	"github.com/inhere/go-web-skeleton/app/helper"
 	"github.com/inhere/go-web-skeleton/model"
 )
 
 // allowed app env name
 const (
-	PROD = "prod"
-	PRE  = "pre"
-	TEST = "test"
-	DEV  = "dev"
+	EnvProd = "prod"
+	EnvPre  = "pre"
+	EnvTest = "test"
+	EnvDev  = "dev"
 )
 
 // for application
@@ -23,19 +24,24 @@ const (
 	PageSize    = 20
 	PageSizeStr = "20"
 	MaxPageSize = 100
+
+	ConfigSuffix = ".toml"
 )
 
 // application info
 var (
-	Env  = "dev"
-	Name = "go-web-skeleton"
+	EnvName = "dev"
+	Name    = "go-web-skeleton"
 
-	debug bool
+	Debug bool
 
 	Hostname string
 	RootPath string
-	GitInfo  model.GitInfoData
+	GitInfo  model.GitInfo
+
 	HttpPort = 9440
+	// AbsPath always return abs path.
+	AbsPath = helper.GetRootPath()
 )
 
 // the app work dir path
@@ -43,10 +49,6 @@ var WorkDir, _ = os.Getwd()
 
 // IsEnv current env name check
 func IsEnv(env string) bool {
-	return env == Env
+	return env == EnvName
 }
 
-// IsDebug is debug mode
-func IsDebug() bool {
-	return debug
-}

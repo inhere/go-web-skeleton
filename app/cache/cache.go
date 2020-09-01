@@ -8,8 +8,9 @@ import (
 
 	"github.com/gomodule/redigo/redis"
 	"github.com/gookit/config/v2"
-	"github.com/gookit/goutil/calc"
 	"github.com/gookit/goutil/jsonutil"
+	"github.com/gookit/goutil/mathutil"
+	"github.com/inhere/go-web-skeleton/app"
 	"github.com/inhere/go-web-skeleton/app/clog"
 	"github.com/inhere/go-web-skeleton/app/helper"
 	"github.com/pkg/errors"
@@ -26,14 +27,14 @@ var (
 // init cache redis conn pool
 // ref package: github.com/astaxie/beego/cache/redis
 // redigo doc https://godoc.org/github.com/gomodule/redigo/redis#pkg-examples
-func Init(d bool) {
+func InitCache() (err error) {
 	enable = config.Bool("db.enable")
 	if !enable {
 		clog.Debugf("cache is disabled, skip init it")
 		return
 	}
 
-	debug = d
+	debug = app.Debug
 	// 从配置文件获取redis的ip以及db
 	conf := config.StringMap("cache")
 	prefix = conf["prefix"]
@@ -45,6 +46,7 @@ func Init(d bool) {
 
 	// 建立连接池
 	pool = helper.NewRedisPool(server, password, redisDb)
+	return
 }
 
 // ClosePool Close pool
@@ -136,7 +138,7 @@ func exec(commandName string, args ...interface{}) (reply interface{}, err error
 		logrus.Debug(
 			"operate redis cache: ", commandName,
 			"cache_key", fullKey,
-			"elapsed_time", calc.ElapsedTime(st),
+			"elapsed_time", mathutil.ElapsedTime(st),
 		)
 
 		return

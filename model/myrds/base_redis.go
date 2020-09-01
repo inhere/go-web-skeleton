@@ -1,21 +1,28 @@
-package rds
+package myrds
 
 import (
 	"fmt"
 	"log"
-	"strconv"
 
 	"github.com/gomodule/redigo/redis"
 	"github.com/gookit/config/v2"
+	"github.com/inhere/go-web-skeleton/app"
 	"github.com/inhere/go-web-skeleton/app/clog"
 	"github.com/inhere/go-web-skeleton/app/helper"
 	"github.com/sirupsen/logrus"
 )
 
+type rdsConfig struct {
+	Server string
+	Auth   string
+	Db     int
+
+	Disable bool
+}
+
 var (
-	debug  bool
-	enable bool
-	pool   *redis.Pool
+	cfg  rdsConfig
+	pool *redis.Pool
 )
 
 // redisPrefix
@@ -32,33 +39,32 @@ func GenRedisKey(tpl string, keys ...interface{}) string {
 
 // init redis connection pool
 // redigo doc https://godoc.org/github.com/gomodule/redigo/redis#pkg-examples
-func init() {
-	debug = config.Bool("debug")
-	enable = config.Bool("redis.enable")
-	if !enable {
+func InitRedis() (err error) {
+	// 从配置文件获取redis的ip以及db
+	err = config.MapStruct("redis", &cfg)
+	if err != nil {
+		return
+	}
+
+	if cfg.Disable {
 		clog.Debugf("redis is disabled, skip init redis connection")
 		return
 	}
 
-	conf := config.StringMap("redis")
-
-	// 从配置文件获取redis的ip以及db
-	redisUrl := conf["server"]
-	password := conf["auth"]
-	redisDb, _ := strconv.Atoi(conf["db"])
-
-	clog.Printf("redis - server=%s db=%d auth=%s\n", redisUrl, redisDb, password)
+	fmt.Printf("redis - server=%s db=%d auth=%s\n", cfg.Server, cfg.Db, cfg.Auth)
 
 	// 建立连接池
-	pool = helper.NewRedisPool(redisUrl, password, redisDb)
+	pool = helper.NewRedisPool(cfg.Server, cfg.Auth, cfg.Db)
+	return
 }
 
 // ClosePool close redis pool
 func ClosePool() error {
-	if enable {
-		return pool.Close()
+	if cfg.Disable {
+		return nil
 	}
-	return nil
+
+	return pool.Close()
 }
 
 // Connection return redis connection.
@@ -67,12 +73,12 @@ func ClosePool() error {
 //   defer conn.Close()
 //   ... do something ...
 func Connection() redis.Conn {
-	logrus.Info("get new redis connection from pool")// zap.Namespace("context"),
+	logrus.Info("get new redis connection from pool") // zap.Namespace("context"),
 	// zap.Int("IdleCount", pool.IdleCount()),
 	// zap.Int("ActiveCount", pool.ActiveCount()),
 
 	// 记录操作日志
-	if debug {
+	if app.Debug {
 		w := logrus.StandardLogger().Writer()
 		return redis.NewLoggingConn(pool.Get(), log.New(w, "", 0), "rds")
 	}

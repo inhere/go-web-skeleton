@@ -13,10 +13,14 @@ func Home(c *rux.Context) {
 }
 
 func SwagDoc(c *rux.Context) {
-	fInfo, _ := os.Stat("static/swagger.json")
+	fInfo, err := os.Stat("static/swagger.json")
+	if err != nil {
+		c.AbortWithStatus(404, "swagger doc file not exists")
+		return
+	}
 
 	data := map[string]string{
-		"Env":        app.Env,
+		"EnvName":        app.EnvName,
 		"AppName":    app.Name,
 		"JsonFile":   "/static/swagger.json",
 		"SwgUIPath":  "/static/swagger-ui",
