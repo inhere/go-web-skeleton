@@ -118,7 +118,7 @@ rm static/docs.go
 type SomeModel struct {
 	// the name description
 	Name   string `json:"name" example:"tom"`
-}	
+}
 ```
 
 ## 使用帮助

@@ -1,0 +1,124 @@
+basePath: /v1
+definitions:
+  form.CreateUserForm:
+    properties:
+      accept:
+        description: Accept user licence
+        example: 1
+        type: integer
+      age:
+        description: Age user age
+        type: integer
+      email:
+        description: Email user email
+        type: string
+      password:
+        description: Password user password
+        type: integer
+      username:
+        description: Username user name
+        example: demo
+        type: string
+    type: object
+  model.JsonMapData:
+    properties:
+      code:
+        type: integer
+      data:
+        additionalProperties:
+          type: string
+        type: object
+      message:
+        type: string
+    type: object
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: https://github.com/inhere
+  description: My Project API
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: https://github.com/inhere
+  title: My Project API
+  version: "1.0"
+paths:
+  /config:
+    get:
+      parameters:
+      - description: config key string
+        in: query
+        name: key
+        type: string
+      responses:
+        "201":
+          description: Created
+          schema:
+            type: string
+        "403":
+          description: Forbidden
+          schema:
+            type: body
+      summary: Get app config
+      tags:
+      - InternalApi
+  /health:
+    get:
+      description: get app health
+      responses:
+        "201":
+          description: Created
+          schema:
+            type: string
+        "403":
+          description: Forbidden
+          schema:
+            type: body
+      summary: 检测API
+      tags:
+      - InternalApi
+  /users:
+    post:
+      description: get data by ID
+      parameters:
+      - description: new user data
+        in: body
+        name: bodyData
+        required: true
+        schema:
+          $ref: '#/definitions/form.CreateUserForm'
+      responses:
+        "200":
+          description: We need ID!!
+          schema:
+            $ref: '#/definitions/model.JsonMapData'
+        "404":
+          description: Can not find ID
+          schema:
+            $ref: '#/definitions/model.JsonMapData'
+      summary: create an new user
+      tags:
+      - UserApi
+  /users/{id}:
+    get:
+      description: get data by ID
+      parameters:
+      - description: user ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: We need ID!!
+          schema:
+            $ref: '#/definitions/model.JsonMapData'
+        "404":
+          description: Can not find ID
+          schema:
+            $ref: '#/definitions/model.JsonMapData'
+      summary: Get one user detail by ID
+      tags:
+      - UserApi
+swagger: "2.0"

@@ -1,0 +1,186 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "My Project API",
+        "title": "My Project API",
+        "termsOfService": "https://github.com/inhere",
+        "contact": {
+            "name": "API Support",
+            "url": "https://github.com/inhere",
+            "email": "support@swagger.io"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
+    },
+    "basePath": "/v1",
+    "paths": {
+        "/config": {
+            "get": {
+                "tags": [
+                    "InternalApi"
+                ],
+                "summary": "Get app config",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "config key string",
+                        "name": "key",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "type": "body"
+                        }
+                    }
+                }
+            }
+        },
+        "/health": {
+            "get": {
+                "description": "get app health",
+                "tags": [
+                    "InternalApi"
+                ],
+                "summary": "检测API",
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "type": "body"
+                        }
+                    }
+                }
+            }
+        },
+        "/users": {
+            "post": {
+                "description": "get data by ID",
+                "tags": [
+                    "UserApi"
+                ],
+                "summary": "create an new user",
+                "parameters": [
+                    {
+                        "description": "new user data",
+                        "name": "bodyData",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/form.CreateUserForm"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "We need ID!!",
+                        "schema": {
+                            "$ref": "#/definitions/model.JsonMapData"
+                        }
+                    },
+                    "404": {
+                        "description": "Can not find ID",
+                        "schema": {
+                            "$ref": "#/definitions/model.JsonMapData"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{id}": {
+            "get": {
+                "description": "get data by ID",
+                "tags": [
+                    "UserApi"
+                ],
+                "summary": "Get one user detail by ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "user ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "We need ID!!",
+                        "schema": {
+                            "$ref": "#/definitions/model.JsonMapData"
+                        }
+                    },
+                    "404": {
+                        "description": "Can not find ID",
+                        "schema": {
+                            "$ref": "#/definitions/model.JsonMapData"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "form.CreateUserForm": {
+            "type": "object",
+            "properties": {
+                "accept": {
+                    "description": "Accept user licence",
+                    "type": "integer",
+                    "example": 1
+                },
+                "age": {
+                    "description": "Age user age",
+                    "type": "integer"
+                },
+                "email": {
+                    "description": "Email user email",
+                    "type": "string"
+                },
+                "password": {
+                    "description": "Password user password",
+                    "type": "integer"
+                },
+                "username": {
+                    "description": "Username user name",
+                    "type": "string",
+                    "example": "demo"
+                }
+            }
+        },
+        "model.JsonMapData": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

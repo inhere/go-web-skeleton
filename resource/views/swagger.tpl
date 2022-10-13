@@ -146,7 +146,7 @@ function on_swagger_rendered() {
 <h2>接口信息</h2>
 <ul>
     <li><strong>更新时间: </strong> <code>${upTime}</code></li>
-    <li><strong>接口环境: </strong> <code>{{.Env}}</code></li>
+    <li><strong>接口环境: </strong> <code>{{.EnvName}}</code></li>
     <li><strong>接口统计: </strong> <code>${count}</code> 个
         <small>(<span>GET: </span> <code>${countGet}</code>，
         <span>POST: </span> <code>${countPost}</code>，
