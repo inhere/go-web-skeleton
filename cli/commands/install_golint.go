@@ -1,7 +1,7 @@
-package handler
+package commands
 
 import (
-	"github.com/gookit/gcli/v2"
+	"github.com/gookit/gcli/v3"
 )
 
 // InstallGoLintCommand Install lint/golint tool package

@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/gookit/gcli/v2"
-	"github.com/gookit/gcli/v2/builtin"
-	"github.com/inhere/go-web-skeleton/cmd/handler"
+	"github.com/gookit/gcli/v3"
+	"github.com/gookit/gcli/v3/builtin"
+	"github.com/inhere/go-web-skeleton/cli/commands"
 )
 
 // for test run: go build ./cmd/cliapp && ./cliapp
@@ -15,9 +15,9 @@ func main() {
 	// app.SetVerbose(gcli.VerbDebug)
 	// app.DefaultCmd("exampl")
 
-	app.Add(handler.GitCommand())
-	app.Add(handler.InstallGoLintCommand())
-	app.Add(handler.InstallSwagCommand())
+	app.Add(commands.GitCommand())
+	app.Add(commands.InstallGoLintCommand())
+	app.Add(commands.InstallSwagCommand())
 	// app.Add(cmd.ColorCommand())
 	app.Add(builtin.GenAutoCompleteScript())
 	// fmt.Printf("%+v\n", cliapp.CommandNames())

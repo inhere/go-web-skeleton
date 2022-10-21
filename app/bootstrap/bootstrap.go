@@ -9,7 +9,7 @@ import (
 	"github.com/gookit/color"
 	"github.com/gookit/config/v2/dotnev"
 	"github.com/gookit/config/v2/toml"
-	"github.com/gookit/gcli/v2/show"
+	"github.com/gookit/gcli/v3/show"
 	"github.com/gookit/goutil/fsutil"
 	"github.com/gookit/goutil/jsonutil"
 	"github.com/gookit/i18n"

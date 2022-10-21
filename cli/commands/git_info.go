@@ -1,11 +1,11 @@
-package handler
+package commands
 
 import (
 	"fmt"
 	"strings"
 
 	"github.com/gookit/color"
-	"github.com/gookit/gcli/v2"
+	"github.com/gookit/gcli/v3"
 	"github.com/gookit/goutil/cliutil"
 	"github.com/gookit/goutil/jsonutil"
 	"github.com/inhere/go-web-skeleton/model"

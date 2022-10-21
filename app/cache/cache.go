@@ -5,6 +5,7 @@ import (
 	"log"
 	"strconv"
 	"time"
+	"errors"
 
 	"github.com/gomodule/redigo/redis"
 	"github.com/gookit/config/v2"
@@ -13,7 +14,6 @@ import (
 	"github.com/inhere/go-web-skeleton/app"
 	"github.com/inhere/go-web-skeleton/app/clog"
 	"github.com/inhere/go-web-skeleton/app/helper"
-	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 )
 

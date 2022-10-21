@@ -1,12 +1,12 @@
-package handler
+package commands
 
 import (
 	"strings"
 	"time"
 
 	"github.com/gookit/color"
-	"github.com/gookit/gcli/v2"
-	"github.com/gookit/gcli/v2/progress"
+	"github.com/gookit/gcli/v3"
+	"github.com/gookit/gcli/v3/progress"
 	"github.com/gookit/goutil/sysutil"
 )
 
