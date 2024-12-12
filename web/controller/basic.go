@@ -9,7 +9,7 @@ import (
 	"github.com/gookit/rux"
 	"github.com/inhere/go-web-skeleton/app"
 	"github.com/inhere/go-web-skeleton/model"
-	"github.com/sirupsen/logrus"
+	"github.com/gookit/slog"
 )
 
 // BaseApi controller
@@ -61,7 +61,7 @@ func (a *BaseApi) MakeRes(code int, err error, data interface{}) *model.JsonData
 
 	// log and print error message
 	if err != nil {
-		logrus.Warn("detected response error", "code", code, "message", err.Error())
+		slog.Warn("detected response error", "code", code, "message", err.Error())
 
 		// if open debug
 		if app.Debug {

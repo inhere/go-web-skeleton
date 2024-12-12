@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/gookit/color"
-	"github.com/gookit/config/v2/dotnev"
+	"github.com/gookit/ini/v2/dotenv"
 	"github.com/gookit/config/v2/toml"
 	"github.com/gookit/gcli/v3/show"
 	"github.com/gookit/goutil/fsutil"
@@ -23,13 +23,13 @@ import (
 	"github.com/gookit/config/v2"
 	"github.com/inhere/go-web-skeleton/model"
 
-	"github.com/gookit/view"
+	"github.com/gookit/easytpl"
 )
 
 // components of the application
 
 func initEnv() error {
-	err := dotnev.LoadExists("./", ".env")
+	err := dotenv.LoadExists("./", ".env")
 	if err != nil {
 		return err
 	}
@@ -94,7 +94,7 @@ func initConfig()error {
 
 func initApp() error {
 	// view templates
-	view.Initialize(func(r *view.Renderer) {
+	easytpl.Initialize(func(r *easytpl.Renderer) {
 		r.ViewsDir = "resource/views"
 	})
 
@@ -146,7 +146,6 @@ func initI18n() error {
 func onExit() {
 	var err error
 	// sync logs
-	// logrus.
 
 	// unregister from eureka
 	// erkServer.Unregister()

@@ -13,7 +13,7 @@ import (
 	// init redis, mongo, mysql connection
 
 	"github.com/gookit/rux"
-	"github.com/gookit/rux/handlers"
+	"github.com/gookit/rux/pkg/handlers"
 )
 
 var router *rux.Router

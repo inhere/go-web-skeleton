@@ -9,7 +9,7 @@ import (
 	"github.com/inhere/go-web-skeleton/app"
 	"github.com/inhere/go-web-skeleton/app/clog"
 	"github.com/inhere/go-web-skeleton/app/helper"
-	"github.com/sirupsen/logrus"
+	"github.com/gookit/slog"
 )
 
 type rdsConfig struct {
@@ -73,13 +73,13 @@ func ClosePool() error {
 //   defer conn.Close()
 //   ... do something ...
 func Connection() redis.Conn {
-	logrus.Info("get new redis connection from pool") // zap.Namespace("context"),
+	slog.Info("get new redis connection from pool") // zap.Namespace("context"),
 	// zap.Int("IdleCount", pool.IdleCount()),
 	// zap.Int("ActiveCount", pool.ActiveCount()),
 
 	// 记录操作日志
 	if app.Debug {
-		w := logrus.StandardLogger().Writer()
+		w := slog.Std()
 		return redis.NewLoggingConn(pool.Get(), log.New(w, "", 0), "rds")
 	}
 

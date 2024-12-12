@@ -7,7 +7,7 @@ A complete Golang web application skeleton.
 Contains:
 
 - Can be used for API interface applications, CLI command line applications, WEB applications
-- Log library `logrus` configuration used
+- Log library `gookit/slog` configuration used
 - swagger API documentation configuration generation
 - Multi-language support, view rendering, request data validation
 - Configure read management, load according to environment, multi-file support
@@ -115,7 +115,7 @@ JSON:
 ### Other packages
 
 - I18n language: [gookit/i18n](https://github.com/gookit/i18n) ✅
-- View rendering: [gookit/view](https://github.com/gookit/view) ✅
+- View rendering: [gookit/easytpl](https://github.com/gookit/easytpl) ✅
 
 Config register center:
 

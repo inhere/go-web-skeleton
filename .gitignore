@@ -22,3 +22,4 @@ runtime/
 *.js.map
 /cliapp
 /vendor
+oryxBuildBinary

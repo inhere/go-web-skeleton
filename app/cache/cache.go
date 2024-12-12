@@ -14,7 +14,7 @@ import (
 	"github.com/inhere/go-web-skeleton/app"
 	"github.com/inhere/go-web-skeleton/app/clog"
 	"github.com/inhere/go-web-skeleton/app/helper"
-	"github.com/sirupsen/logrus"
+	"github.com/gookit/slog"
 )
 
 var (
@@ -98,7 +98,7 @@ func Set(key string, data interface{}, ttl int) error {
 func Delete(key string) error {
 	_, err := exec("del", key)
 	if err != nil {
-		logrus.Error("redis error: ", err.Error())
+		slog.Error("redis error: ", err.Error())
 	}
 
 	return err
@@ -109,7 +109,7 @@ func Has(key string) bool {
 	// 0 OR 1
 	one, err := redis.Int(exec("exists", key))
 	if err != nil {
-		logrus.Error("redis error: ", err.Error())
+		slog.Error("redis error: ", err.Error())
 	}
 
 	return one == 1
@@ -135,7 +135,7 @@ func exec(commandName string, args ...interface{}) (reply interface{}, err error
 		defer c.Close()
 		reply, err = c.Do(commandName, args...)
 
-		logrus.Debug(
+		slog.Debug(
 			"operate redis cache: ", commandName,
 			"cache_key", fullKey,
 			"elapsed_time", mathutil.ElapsedTime(st),
@@ -155,13 +155,13 @@ func exec(commandName string, args ...interface{}) (reply interface{}, err error
 //   defer conn.Close()
 //   ... do something ...
 func Connection() redis.Conn {
-	logrus.Info("get new redis connection from pool")// zap.Namespace("context"),
+	slog.Info("get new redis connection from pool")// zap.Namespace("context"),
 	// zap.Int("IdleCount", pool.IdleCount()),
 	// zap.Int("ActiveCount", pool.ActiveCount()),
 
 	// 记录操作日志
 	if debug {
-		w := logrus.StandardLogger().Writer()
+		w := slog.StandardLogger().Writer()
 		return redis.NewLoggingConn(pool.Get(), log.New(w, "", 0), "rds")
 	}
 

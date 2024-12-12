@@ -7,7 +7,7 @@
 包含：
 
 - 可用于API接口应用，CLI命令行应用，WEB应用
-- 日志库logrus配置使用
+- 日志库 gookit/slog 配置使用
 - swagger API文档配置生成
 - 多语言支持，视图渲染，请求数据验证
 - 配置读取管理，根据环境加载，多文件支持
@@ -48,6 +48,7 @@ makefile  编写了一些通用的快捷命令，帮助打包，构建docker，�
   - ini配置：[gookit/ini](https://github.com/gookit/ini)
   - 多种格式配置：[gookit/config](https://github.com/gookit/config)
 - 日志记录：
+  - [gookit/slog](https://github.com/gookit/slog) ✅
   - [sirupsen/logrus](https://github.com/sirupsen/logrus)
     - 日志分割：[rifflock/lfshook](https://github.com/rifflock/lfshook)
     - 日志分割：[lestrrat-go/file-rotatelogs](https://github.com/lestrrat-go/file-rotatelogs)
@@ -61,7 +62,7 @@ makefile  编写了一些通用的快捷命令，帮助打包，构建docker，�
   - [go-redis/redis](https://github.com/go-redis/redis)
   - [gomodule/redigo](https://github.com/gomodule/redigo/redis)
 - language: [gookit/i18n](https://github.com/gookit/i18n)
-- view渲染: [gookit/view](https://github.com/gookit/view)
+- view渲染: [gookit/easytpl](https://github.com/gookit/easytpl)
 - 命令行应用: [gookit/gcli](https://github.com/gookit/gcli)
 - 表单数据验证:
   - [gookit/validate](https://github.com/gookit/validate) 
