@@ -1,6 +1,6 @@
 module github.com/inhere/go-web-skeleton
 
-go 1.24.0
+go 1.25.0
 
 require (
 	github.com/globalsign/mgo v0.0.0-20181015135952-eeefdecb41b8
@@ -34,10 +34,10 @@ require (
 	github.com/monoculum/formam v3.5.5+incompatible // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/xo/terminfo v0.0.0-20220910002029-abceb7e1c41e // indirect
-	golang.org/x/crypto v0.45.0 // indirect
-	golang.org/x/sync v0.18.0 // indirect
-	golang.org/x/sys v0.38.0 // indirect
-	golang.org/x/term v0.37.0 // indirect
-	golang.org/x/text v0.31.0 // indirect
+	golang.org/x/crypto v0.52.0 // indirect
+	golang.org/x/sync v0.20.0 // indirect
+	golang.org/x/sys v0.45.0 // indirect
+	golang.org/x/term v0.43.0 // indirect
+	golang.org/x/text v0.37.0 // indirect
 	xorm.io/builder v0.3.13 // indirect
 )
